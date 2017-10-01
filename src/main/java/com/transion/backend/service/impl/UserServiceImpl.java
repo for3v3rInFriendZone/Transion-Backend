@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
 	public void deleteAll() {
 		// TODO Auto-generated method stub
 		userRep.deleteAll();
-	}
+	}   
 
 	@Override
 	public String passwordEncrypt(String password) {
