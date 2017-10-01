@@ -24,7 +24,7 @@ public class UserController {
 	public ResponseEntity<List<User>> getUsers() {
 
 		List<User> users = (List<User>) userSer.findAll();
-		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+		return new ResponseEntity<List<User>>(users, HttpStatus.OK); 
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
