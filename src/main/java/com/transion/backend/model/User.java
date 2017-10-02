@@ -1,23 +1,26 @@
 package com.transion.backend.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.transion.backend.model.rbac.Role;
 
 @Entity
 @Table(name = "APP_USER")
 public class User implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -43,18 +46,30 @@ public class User implements Serializable {
 
 	@Column(name = "TYPE")
 	private String type;
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Role> roles = new ArrayList<Role>();
 
 	public User() {
 
 	}
 
-	public User(String firstname, String lastname, String username, String password, String type) {
+	public User(String firstname, String lastname, String username, String password, String type, List<Role> roles) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
 		this.password = password;
 		this.type = type;
+		this.roles = roles;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getFirstname() {
@@ -97,8 +112,11 @@ public class User implements Serializable {
 		this.type = type;
 	}
 
-	public Long getId() {
-		return id;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 }

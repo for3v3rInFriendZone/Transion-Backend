@@ -1,8 +1,10 @@
 package com.transion.backend.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.transion.backend.model.User;
 
-public interface UserService{
+public interface UserService extends UserDetailsService{
 	
 	public User save(User user);
 
