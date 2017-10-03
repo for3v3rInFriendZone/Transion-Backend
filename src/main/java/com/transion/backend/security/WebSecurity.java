@@ -1,9 +1,14 @@
 package com.transion.backend.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,25 +27,54 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	UserDetailsService userDetailsService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();;
+	
+	@Autowired
+	JWTAuthenticatinProvider jwtAuthenticationProvider;
+    
+	@Autowired
+	DataSource dataSource;
+	
+	@Autowired
+	AuthenticationManager authenticationManager;
+	
+	@Value("${spring.queries.users-query}")
+	private String usersQuery;
+	
+	@Value("${spring.queries.roles-query}")
+	private String rolesQuery;
+	
+	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+	
+	protected JWTAuthenticationFilter buildJWTAuthenticationFilter() throws Exception {
+		JWTAuthenticationFilter filter = new JWTAuthenticationFilter("/login");
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
+    }
 
-
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        /*auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);*/
+    	auth
+    		.jdbcAuthentication()
+    		.usersByUsernameQuery(usersQuery)
+    		.groupAuthoritiesByUsername(rolesQuery)
+    		.passwordEncoder(bCryptPasswordEncoder);
+        auth.authenticationProvider(jwtAuthenticationProvider);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.POST, "/user/save").permitAll()
+                .antMatchers(HttpMethod.POST, "/role/**").hasAnyRole("ADMIN","NESTO")
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilterBefore(buildJWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()));
     }
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-    }
+    
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -49,4 +83,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	    return source;
     }
     
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 }

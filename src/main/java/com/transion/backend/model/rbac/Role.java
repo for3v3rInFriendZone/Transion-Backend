@@ -25,10 +25,10 @@ public class Role implements Serializable{
 	private Long id;
 	
 	@Column(name = "NAME", nullable = false)
-	private String name;
+	private String role;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<Permission> permissions = new ArrayList<Permission>();
+/*	@OneToMany(fetch = FetchType.LAZY)
+	private List<Permission> permissions = new ArrayList<Permission>();*/
 
 	public Long getId() {
 		return id;
@@ -38,19 +38,19 @@ public class Role implements Serializable{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getRole() {
+		return role;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
-	public List<Permission> getPermissions() {
+	/*public List<Permission> getPermissions() {
 		return permissions;
 	}
 
 	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
-	}
+	}*/
 }
