@@ -39,7 +39,7 @@ public class UserController {
 
 	}
 	
-	@RequestMapping(value="/save", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<User> saveUser(@RequestBody User user) {
 		
 		user.setPassword(userSer.passwordEncrypt(user.getPassword()));
