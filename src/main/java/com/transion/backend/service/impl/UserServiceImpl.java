@@ -1,8 +1,11 @@
 package com.transion.backend.service.impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.transion.backend.dto.UserDTO;
 import com.transion.backend.model.User;
 import com.transion.backend.repository.UserRepository;
 import com.transion.backend.service.UserService;
@@ -13,16 +16,19 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserRepository userRep;
 	
+	@Autowired
+	ModelMapper mapDTO;
+	
 	@Override
-	public User save(User user) {
+	public UserDTO save(User user) {
 		// TODO Auto-generated method stub
-		return userRep.save(user);
+		return mapDTO.map(userRep.save(user), UserDTO.class);
 	}
 
 	@Override
-	public User findOne(Long id) {
+	public UserDTO findOne(Long id) {
 		// TODO Auto-generated method stub
-		return userRep.findOne(id);
+		return mapDTO.map(userRep.findOne(id), UserDTO.class);
 	}
 
 	@Override

@@ -1,12 +1,13 @@
 package com.transion.backend.service;
 
+import com.transion.backend.dto.UserDTO;
 import com.transion.backend.model.User;
 
 public interface UserService{
 	
-	public User save(User user);
+	public UserDTO save(User user);
 
-	public User findOne(Long id);
+	public UserDTO findOne(Long id);
 
 	public Iterable<User> findAll();
 
