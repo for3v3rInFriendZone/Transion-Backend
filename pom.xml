@@ -6,10 +6,10 @@
 	<groupId>com.transion</groupId>
 	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>backend</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Master project.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -37,10 +37,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
-		<!--  <dependency>
+		
+		<!-- Security -->
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>-->
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.7.0</version>
+		</dependency>
 		
 		<dependency>
 		  <groupId>org.modelmapper</groupId>

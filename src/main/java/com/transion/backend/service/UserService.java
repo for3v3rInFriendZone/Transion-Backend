@@ -1,9 +1,10 @@
 package com.transion.backend.service;
 
 import com.transion.backend.dto.UserDTO;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import com.transion.backend.model.User;
 
-public interface UserService{
+public interface UserService extends UserDetailsService{
 	
 	public UserDTO save(User user);
 

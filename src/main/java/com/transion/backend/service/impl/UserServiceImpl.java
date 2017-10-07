@@ -1,7 +1,11 @@
 package com.transion.backend.service.impl;
 
 import org.modelmapper.ModelMapper;
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +77,13 @@ public class UserServiceImpl implements UserService{
 	public User findByUsername(String username) {
 		// TODO Auto-generated method stub
 		return userRep.findByUsername(username);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		User user = userRep.findByUsername(username);
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.emptyList());
 	}
 
 	
