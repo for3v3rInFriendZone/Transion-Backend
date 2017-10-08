@@ -2,6 +2,7 @@ package com.transion.backend.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,9 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.transion.backend.model.rbac.Role;
@@ -31,25 +31,34 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
-	@Column(name = "FIRSTNAME")
+	@Column(name = "FIRSTNAME", nullable = false)
 	private String firstname;
 
-	@NotNull
-	@Column(name = "LASTNAME")
+	@Column(name = "LASTNAME", nullable = false)
 	private String lastname;
 
-	@NotNull
-	@Column(name = "USERNAME", unique = true)
+	@Column(name = "USERNAME",nullable = false , unique = true)
 	private String username;
 
-	@NotNull
 	@Size(min = 6)
-	@Column(name = "USER_PASSWORD")
+	@Column(name = "USER_PASSWORD", nullable = false)
 	private String password;
 
-	@Column(name = "TYPE")
-	private String type;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "TYPE_ID")
+	private UserType type;
+	
+	@Column(name = "EMAIL")
+	private String email;
+	
+	@Column(name = "TELEPHONE")
+	private String telephone;
+	
+	@Column(name = "CREATEDON")
+	private Date createdOn;
+	
+	@Column(name = "UPDATEDON")
+	private Date updatedOn;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -59,7 +68,7 @@ public class User implements Serializable {
 
 	}
 
-	public User(String firstname, String lastname, String username, String password, String type, List<Role> roles) {
+	public User(String firstname, String lastname, String username, String password, UserType type, List<Role> roles) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -109,11 +118,11 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public String getType() {
+	public UserType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(UserType type) {
 		this.type = type;
 	}
 
@@ -123,5 +132,37 @@ public class User implements Serializable {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Date getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public void setUpdatedOn(Date updatedOn) {
+		this.updatedOn = updatedOn;
 	}
 }

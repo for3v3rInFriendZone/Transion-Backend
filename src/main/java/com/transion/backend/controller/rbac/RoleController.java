@@ -18,7 +18,7 @@ public class RoleController {
 	@Autowired
 	RoleService roleService;
 	
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Role> save(@RequestBody Role role){
 		return new ResponseEntity<Role>(roleService.save(role), HttpStatus.CREATED);
 	}
