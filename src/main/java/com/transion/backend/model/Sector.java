@@ -35,9 +35,11 @@ public class Sector implements Serializable{
 	private User responsibleUser;
 	
 	@OneToMany
+	@JoinColumn(name = "SECTOR_ID", referencedColumnName = "id")
 	private List<User> employees = new ArrayList<User>();
 	
 	@OneToMany
+	@JoinColumn(name = "SECTOR_ID", referencedColumnName = "id")
 	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
 	public Long getId() {

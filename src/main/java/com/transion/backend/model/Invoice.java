@@ -48,6 +48,7 @@ public class Invoice implements Serializable{
 	private Tax tax;
 	
 	@OneToMany
+	@JoinColumn(name = "INVOICE_ID", referencedColumnName = "id")
 	private List<InvoiceItem> invoiceItems = new ArrayList<InvoiceItem>();
 	
 	@ManyToOne

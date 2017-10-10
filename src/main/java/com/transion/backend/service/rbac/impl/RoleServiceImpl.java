@@ -1,4 +1,4 @@
-package com.transion.backend.service.rbac.imp;
+package com.transion.backend.service.rbac.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

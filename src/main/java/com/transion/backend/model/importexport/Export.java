@@ -24,6 +24,7 @@ public class Export implements Serializable{
 	private Long id;
 	
 	@OneToMany
+	@JoinColumn(name = "EXPORT_ID", referencedColumnName = "id")
 	private List<ExportLine> exportLines = new ArrayList<ExportLine>();
 	
 	@ManyToOne

@@ -33,6 +33,7 @@ public class Delivery implements Serializable{
 	private User deliverer;
 	
 	@OneToMany
+	@JoinColumn(name = "DELIVERY_ID", referencedColumnName = "id")
 	private List<Invoice> invoices = new ArrayList<Invoice>();
 
 	public Long getId() {

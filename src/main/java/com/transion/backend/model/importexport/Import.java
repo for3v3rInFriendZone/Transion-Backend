@@ -24,6 +24,7 @@ public class Import implements Serializable{
 	private Long id;
 	
 	@OneToMany
+	@JoinColumn(name = "IMPORT_ID", referencedColumnName = "id")
 	private List<ImportLine> importLines = new ArrayList<ImportLine>();
 	
 	@ManyToOne

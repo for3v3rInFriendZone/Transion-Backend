@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +23,7 @@ public class Mapping implements Serializable{
 	private Long id;
 	
 	@OneToMany
+	@JoinColumn(name = "MAPPING_ID", referencedColumnName = "id")
 	private List<Field> fields = new ArrayList<Field>();
 
 	public Long getId() {

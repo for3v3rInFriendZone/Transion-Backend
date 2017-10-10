@@ -46,8 +46,10 @@ public class Transaction implements Serializable{
 	private Client client;
 	
 	@OneToMany
+	@JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "id")
 	private List<Dispute> disputes = new ArrayList<Dispute>();
 	
 	@OneToMany
+	@JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "id")
 	private List<Comment> comments = new ArrayList<Comment>();
 }
