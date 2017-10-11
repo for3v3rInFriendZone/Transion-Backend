@@ -2,13 +2,11 @@ package com.transion.backend.service.impl;
 
 import org.modelmapper.ModelMapper;
 import java.util.Collections;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.transion.backend.dto.UserDTO;
 import com.transion.backend.model.User;
 import com.transion.backend.repository.UserRepository;
