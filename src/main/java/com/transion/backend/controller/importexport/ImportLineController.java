@@ -57,7 +57,7 @@ public class ImportLineController {
 		
 		if(importLine == null) {
 			logger.error("ImportLine doesn't exist.");
-			return new ResponseEntity<ImportLine>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ImportLine>(HttpStatus.NOT_FOUND);
 		}
 		
 		return new ResponseEntity<ImportLine>(importLine, HttpStatus.OK);
@@ -74,7 +74,7 @@ public class ImportLineController {
 		
 		if(importLine == null) {
 			logger.error("ImportLine doesn't exist.");
-			return new ResponseEntity<ImportLine>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ImportLine>(HttpStatus.NOT_FOUND);
 		}
 		
 		ilService.delete(id);

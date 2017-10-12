@@ -36,7 +36,14 @@ public class CommentController {
 			return new ResponseEntity<Comment>(HttpStatus.BAD_REQUEST);
 		}
 		
-		return new ResponseEntity<Comment>(commentService.save(comment), HttpStatus.CREATED);
+		Comment comment2 = commentService.save(comment);
+		
+		if(comment2 == null) {
+			logger.error("Comment doesn't save.");
+			return new ResponseEntity<Comment>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<Comment>(comment2, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -50,7 +57,7 @@ public class CommentController {
 		
 		if(comment == null) {
 			logger.error("Comment doesn't exist.");
-			return new ResponseEntity<Comment>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Comment>(HttpStatus.NOT_FOUND);
 		}
 		
 		return new ResponseEntity<Comment>(comment, HttpStatus.OK);
@@ -67,7 +74,7 @@ public class CommentController {
 		
 		if(comment == null) {
 			logger.error("Comment doesn't exist.");
-			return new ResponseEntity<Comment>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Comment>(HttpStatus.NOT_FOUND);
 		}
 		
 		commentService.delete(id);

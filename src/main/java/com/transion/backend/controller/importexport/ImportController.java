@@ -3,6 +3,7 @@ package com.transion.backend.controller.importexport;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,72 +12,78 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transion.backend.model.importexport.Import;
+import com.transion.backend.service.importexport.ImportService;
+
 @RestController
 @RequestMapping(value = "/import")
 public class ImportController {
+	
+	@Autowired
+	ImportService iService;
 
-	/*Logger logger = Logger.getLogger(this.getClass());
+	Logger logger = Logger.getLogger(this.getClass());
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<T> getAll(){
-		return new ResponseEntity<List<E>>(Service.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<Import>> getAll(){
+		return new ResponseEntity<List<Import>>(iService.findAll(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<T> save(@RequestBody T t){
-		if(t == null) {
-			logger.error("t is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Import> save(@RequestBody Import import1){
+		if(import1 == null) {
+			logger.error("Import is null.");
+			return new ResponseEntity<Import>(HttpStatus.BAD_REQUEST);
 		}
 		
-		T t = Service.save(t);
+		Import import2 = iService.save(import1);
 		
-		if(t == null) {
-			logger.error("t is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+		if(import2 == null) {
+			logger.error("Import is null.");
+			return new ResponseEntity<Import>(HttpStatus.BAD_REQUEST);
 		}
 		
-		return new ResponseEntity<T>(t, HttpStatus.CREATED);
+		return new ResponseEntity<Import>(import2, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<T> findOne(@PathVariable Long id){
+	public ResponseEntity<Import> findOne(@PathVariable Long id){
 		if(id == null) {
 			logger.error("Id is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Import>(HttpStatus.BAD_REQUEST);
 		}
 		
-		T t = Service.findOne(id);
+		Import import1 = iService.findOne(id);
 		
-		if(t == null) {
-			logger.error("T doesn't exist.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+		if(import1 == null) {
+			logger.error("Import doesn't exist.");
+			return new ResponseEntity<Import>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<T>(t, HttpStatus.OK);
+		return new ResponseEntity<Import>(import1, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/id", method = RequestMethod.DELETE)
-	public ResponseEntity<T> delete(@PathVariable Long id){
+	public ResponseEntity<Import> delete(@PathVariable Long id){
 		if(id == null) {
 			logger.error("Id is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Import>(HttpStatus.BAD_REQUEST);
 		}
 		
-		T t = Service.findOne(id);
+		Import import1 = iService.findOne(id);
 		
-		if(t == null) {
-			logger.error("T doesn't exist.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+		if(import1 == null) {
+			logger.error("Import doesn't exist.");
+			return new ResponseEntity<Import>(HttpStatus.NOT_FOUND);
 		}
 		
-		Service.delete(id);
-		return new ResponseEntity<T>(HttpStatus.OK);
+		iService.delete(id);
+		return new ResponseEntity<Import>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ResponseEntity<T> deleteAll(){
-		Service.deleteAll();
-		return new ResponseEntity<T>(HttpStatus.OK);
-	}*/
+	public ResponseEntity<Import> deleteAll(){
+		iService.deleteAll();
+		return new ResponseEntity<Import>(HttpStatus.OK);
+	}
 }

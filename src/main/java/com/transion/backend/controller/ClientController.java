@@ -50,7 +50,7 @@ public class ClientController {
 		
 		if(client == null) {
 			logger.error("Client doesn't exist.");
-			return new ResponseEntity<Client>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Client>(HttpStatus.NOT_FOUND);
 		}
 		
 		return new ResponseEntity<Client>(client, HttpStatus.OK);
@@ -67,7 +67,7 @@ public class ClientController {
 		
 		if(client == null) {
 			logger.error("Client doesn't exists.");
-			return new ResponseEntity<Client>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Client>(HttpStatus.NOT_FOUND);
 		}
 		
 		clientService.delete(id);

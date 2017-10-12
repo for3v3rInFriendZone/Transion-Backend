@@ -3,6 +3,7 @@ package com.transion.backend.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,73 +12,78 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transion.backend.model.Document;
+import com.transion.backend.service.DocumentService;
+
 @RestController
 @RequestMapping(value = "/document")
 public class DocumentController {
 
-
-	/*Logger logger = Logger.getLogger(this.getClass());
+	@Autowired
+	DocumentService dService;
+	
+	Logger logger = Logger.getLogger(this.getClass());
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<T> getAll(){
-		return new ResponseEntity<List<E>>(Service.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<Document>> getAll(){
+		return new ResponseEntity<List<Document>>(dService.findAll(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<T> save(@RequestBody T t){
-		if(t == null) {
-			logger.error("t is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Document> save(@RequestBody Document document){
+		if(document == null) {
+			logger.error("Document is null.");
+			return new ResponseEntity<Document>(HttpStatus.BAD_REQUEST);
 		}
 		
-		T t = Service.save(t);
+		Document document2 = dService.save(document);
 		
-		if(t == null) {
-			logger.error("t is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+		if(document2 == null) {
+			logger.error("Document is null.");
+			return new ResponseEntity<Document>(HttpStatus.BAD_REQUEST);
 		}
 		
-		return new ResponseEntity<T>(t, HttpStatus.CREATED);
+		return new ResponseEntity<Document>(document2, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<T> findOne(@PathVariable Long id){
+	public ResponseEntity<Document> findOne(@PathVariable Long id){
 		if(id == null) {
 			logger.error("Id is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Document>(HttpStatus.BAD_REQUEST);
 		}
 		
-		T t = Service.findOne(id);
+		Document document = dService.findOne(id);
 		
-		if(t == null) {
-			logger.error("T doesn't exist.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+		if(document == null) {
+			logger.error("Document doesn't exist.");
+			return new ResponseEntity<Document>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<T>(t, HttpStatus.OK);
+		return new ResponseEntity<Document>(document, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/id", method = RequestMethod.DELETE)
-	public ResponseEntity<T> delete(@PathVariable Long id){
+	public ResponseEntity<Document> delete(@PathVariable Long id){
 		if(id == null) {
 			logger.error("Id is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Document>(HttpStatus.BAD_REQUEST);
 		}
 		
-		T t = Service.findOne(id);
+		Document document = dService.findOne(id);
 		
-		if(t == null) {
-			logger.error("T doesn't exist.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+		if(document == null) {
+			logger.error("Document doesn't exist.");
+			return new ResponseEntity<Document>(HttpStatus.NOT_FOUND);
 		}
 		
-		Service.delete(id);
-		return new ResponseEntity<T>(HttpStatus.OK);
+		dService.delete(id);
+		return new ResponseEntity<Document>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ResponseEntity<T> deleteAll(){
-		Service.deleteAll();
-		return new ResponseEntity<T>(HttpStatus.OK);
-	}*/
+	public ResponseEntity<Document> deleteAll(){
+		dService.deleteAll();
+		return new ResponseEntity<Document>(HttpStatus.OK);
+	}
 }

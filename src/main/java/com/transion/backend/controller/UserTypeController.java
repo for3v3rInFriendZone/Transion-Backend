@@ -3,6 +3,7 @@ package com.transion.backend.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,72 +12,78 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transion.backend.model.UserType;
+import com.transion.backend.service.UserTypeService;
+
 @RestController
 @RequestMapping(value = "/usertype")
 public class UserTypeController {
 
-	/*Logger logger = Logger.getLogger(this.getClass());
+	@Autowired
+	UserTypeService utService;
+	
+	Logger logger = Logger.getLogger(this.getClass());
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<T> getAll(){
-		return new ResponseEntity<List<E>>(Service.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<UserType>> getAll(){
+		return new ResponseEntity<List<UserType>>(utService.findAll(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<T> save(@RequestBody T t){
-		if(t == null) {
-			logger.error("t is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<UserType> save(@RequestBody UserType userType){
+		if(userType == null) {
+			logger.error("UserType is null.");
+			return new ResponseEntity<UserType>(HttpStatus.BAD_REQUEST);
 		}
 		
-		T t = Service.save(t);
+		UserType userType2 = utService.save(userType);
 		
-		if(t == null) {
-			logger.error("t is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+		if(userType2 == null) {
+			logger.error("UserType is null.");
+			return new ResponseEntity<UserType>(HttpStatus.BAD_REQUEST);
 		}
 		
-		return new ResponseEntity<T>(t, HttpStatus.CREATED);
+		return new ResponseEntity<UserType>(userType2, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<T> findOne(@PathVariable Long id){
+	public ResponseEntity<UserType> findOne(@PathVariable Long id){
 		if(id == null) {
 			logger.error("Id is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<UserType>(HttpStatus.BAD_REQUEST);
 		}
 		
-		T t = Service.findOne(id);
+		UserType userType = utService.findOne(id);
 		
-		if(t == null) {
-			logger.error("T doesn't exist.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+		if(userType == null) {
+			logger.error("UserType doesn't exist.");
+			return new ResponseEntity<UserType>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<T>(t, HttpStatus.OK);
+		return new ResponseEntity<UserType>(userType, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/id", method = RequestMethod.DELETE)
-	public ResponseEntity<T> delete(@PathVariable Long id){
+	public ResponseEntity<UserType> delete(@PathVariable Long id){
 		if(id == null) {
 			logger.error("Id is null.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<UserType>(HttpStatus.BAD_REQUEST);
 		}
 		
-		T t = Service.findOne(id);
+		UserType userType = utService.findOne(id);
 		
-		if(t == null) {
-			logger.error("T doesn't exist.");
-			return new ResponseEntity<T>(HttpStatus.BAD_REQUEST);
+		if(userType == null) {
+			logger.error("UserType doesn't exist.");
+			return new ResponseEntity<UserType>(HttpStatus.NOT_FOUND);
 		}
 		
-		Service.delete(id);
-		return new ResponseEntity<T>(HttpStatus.OK);
+		utService.delete(id);
+		return new ResponseEntity<UserType>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ResponseEntity<T> deleteAll(){
-		Service.deleteAll();
-		return new ResponseEntity<T>(HttpStatus.OK);
-	}*/
+	public ResponseEntity<UserType> deleteAll(){
+		utService.deleteAll();
+		return new ResponseEntity<UserType>(HttpStatus.OK);
+	}
 }

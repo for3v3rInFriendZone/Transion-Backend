@@ -57,7 +57,7 @@ public class MappingController {
 		
 		if(mapping == null) {
 			logger.error("Mapping doesn't exist.");
-			return new ResponseEntity<Mapping>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Mapping>(HttpStatus.NOT_FOUND);
 		}
 		
 		return new ResponseEntity<Mapping>(mapping, HttpStatus.OK);
@@ -74,7 +74,7 @@ public class MappingController {
 		
 		if(mapping == null) {
 			logger.error("Mapping doesn't exist.");
-			return new ResponseEntity<Mapping>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Mapping>(HttpStatus.NOT_FOUND);
 		}
 		
 		mService.delete(id);

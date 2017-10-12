@@ -55,7 +55,7 @@ public class CustomFormConfigController {
 		
 		if(cfc == null) {
 			logger.error("CustomFormConfig doesn't exist.");
-			return new ResponseEntity<CustomFormConfig>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<CustomFormConfig>(HttpStatus.NOT_FOUND);
 		}
 		
 		return new ResponseEntity<CustomFormConfig>(cfc, HttpStatus.OK);
@@ -72,7 +72,7 @@ public class CustomFormConfigController {
 		
 		if(cfc == null) {
 			logger.error("CustomFormConfig doesn't exist.");
-			return new ResponseEntity<CustomFormConfig>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<CustomFormConfig>(HttpStatus.NOT_FOUND);
 		}
 		
 		cfcService.delete(id);
