@@ -12,53 +12,58 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.transion.backend.model.address.Address;
+import com.transion.backend.model.scenario.Task;
 
 @Entity
 @Table(name = "CLIENT")
-public class Client implements Serializable{
+public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "NAME", nullable = false)
 	private String name;
-	
+
 	@Column(name = "PIB", nullable = false, unique = true, length = 9)
 	private String pib;
-	
+
 	@Column(name = "EXTERNALUNIQUEKEY", nullable = false, unique = true, length = 8)
 	private String externalUniqueKey;
-	
+
 	@Column(name = "TELEPHONE")
 	private String telephone;
-	
+
 	@Column(name = "EMAIL")
 	private String email;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "RESPONSIBLEUSER_ID", nullable = false)
 	private ResponsibleUser responsibleUser;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ADDRESS_ID", nullable = false)
 	private Address address;
-	
+
 	@Column(name = "CREATEDON")
 	private Date createdOn;
-	
+
 	@Column(name = "UPDATEDON")
 	private Date updatedOn;
-	
+
 	@OneToMany(mappedBy = "client")
 	private List<Transaction> transactions = new ArrayList<Transaction>();
+
+	@ManyToMany(mappedBy = "clients")
+	private List<Task> tasks = new ArrayList<Task>();
 
 	public Long getId() {
 		return id;
@@ -139,4 +144,21 @@ public class Client implements Serializable{
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
+
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
 }
