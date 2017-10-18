@@ -2,6 +2,9 @@ package com.transion.backend.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +24,15 @@ public class DisputeController {
 
 	@Autowired
 	DisputeService dService;
-
+	
+	@PersistenceContext
+	EntityManager em;
+	
 	Logger logger = Logger.getLogger(this.getClass());
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Dispute>> getAll(){
+		List<Dispute> results = em.createQuery("Select d from Dispute d").getResultList();
 		return new ResponseEntity<List<Dispute>>(dService.findAll(), HttpStatus.OK);
 	}
 	

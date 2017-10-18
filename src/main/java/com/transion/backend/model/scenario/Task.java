@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,15 +37,11 @@ public class Task implements Serializable {
 	@Column(name = "LABEL", nullable = false)
 	private String label;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "client_task", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "client_id"))
-	private List<Client> clients = new ArrayList<Client>();
+	@ManyToOne
+	@JoinColumn(name = "MEDIA_ID")
+	private Media media;
 
 	@OneToMany(mappedBy = "task")
-	private List<Media> medias = new ArrayList<Media>();
-
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "transaction_task", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "transaction_id"))
 	private List<Transaction> transactions = new ArrayList<Transaction>();
 
 	public Long getId() {
@@ -63,28 +60,20 @@ public class Task implements Serializable {
 		this.label = label;
 	}
 
-	public List<Client> getClients() {
-		return clients;
-	}
-
-	public void setClients(List<Client> clients) {
-		this.clients = clients;
-	}
-
-	public List<Media> getMedias() {
-		return medias;
-	}
-
-	public void setMedias(List<Media> medias) {
-		this.medias = medias;
-	}
-
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
 
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
+	}
+
+	public Media getMedia() {
+		return media;
+	}
+
+	public void setMedia(Media media) {
+		this.media = media;
 	}
 
 }

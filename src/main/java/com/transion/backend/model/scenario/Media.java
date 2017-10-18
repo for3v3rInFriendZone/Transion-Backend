@@ -1,13 +1,15 @@
 package com.transion.backend.model.scenario;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,9 +28,8 @@ public class Media implements Serializable {
 	@Column(name = "NAME")
 	private String name;
 
-	@ManyToOne
-	@JoinColumn(name = "TASK_ID")
-	private Task task;
+	@OneToMany(mappedBy = "media")
+	private List<Task> tasks = new ArrayList<Task>();
 
 	public Long getId() {
 		return id;
@@ -46,12 +47,12 @@ public class Media implements Serializable {
 		this.name = name;
 	}
 
-	public Task getTask() {
-		return task;
+	public List<Task> getTasks() {
+		return tasks;
 	}
 
-	public void setTask(Task task) {
-		this.task = task;
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 }

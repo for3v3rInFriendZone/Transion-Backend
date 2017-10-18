@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.transion.backend.model.scenario.Media;
 import com.transion.backend.model.scenario.Task;
 
 @Entity
@@ -56,8 +57,9 @@ public class Transaction implements Serializable {
 	@JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "id")
 	private List<Comment> comments = new ArrayList<Comment>();
 
-	@ManyToMany(mappedBy = "transactions")
-	private List<Task> tasks = new ArrayList<Task>();
+	@ManyToOne
+	@JoinColumn(name = "TASK_ID")
+	private Task task;
 
 	public Date getLastDayToPay() {
 		return lastDayToPay;
@@ -123,20 +125,20 @@ public class Transaction implements Serializable {
 		this.comments = comments;
 	}
 
-	public List<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
-	}
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 
 }

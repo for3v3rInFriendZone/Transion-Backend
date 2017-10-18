@@ -61,10 +61,7 @@ public class Client implements Serializable {
 
 	@OneToMany(mappedBy = "client")
 	private List<Transaction> transactions = new ArrayList<Transaction>();
-
-	@ManyToMany(mappedBy = "clients")
-	private List<Task> tasks = new ArrayList<Task>();
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -151,14 +148,6 @@ public class Client implements Serializable {
 
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
-	}
-
-	public List<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
 	}
 
 }
