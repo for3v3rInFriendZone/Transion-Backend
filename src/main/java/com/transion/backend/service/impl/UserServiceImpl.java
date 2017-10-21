@@ -24,13 +24,13 @@ public class UserServiceImpl implements UserService{
 	ModelMapper mapDTO;
 	
 	@Override
-	public UserDTO save(User user) {
-		return mapDTO.map(userRep.save(user), UserDTO.class);
+	public User save(User user) {
+		return userRep.save(user);
 	}
 
 	@Override
-	public UserDTO findOne(Long id) {
-		return mapDTO.map(userRep.findOne(id), UserDTO.class);
+	public User findOne(Long id) {
+		return userRep.findOne(id);
 	}
 
 	@Override

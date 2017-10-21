@@ -1,7 +1,6 @@
 package com.transion.backend.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.transion.backend.dto.UserDTO;
 import com.transion.backend.model.User;
 import com.transion.backend.service.UserService;
 
@@ -42,17 +39,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<UserDTO> saveUser(@RequestBody User user) {
+	public ResponseEntity<User> saveUser(@RequestBody User user) {
 		
 		user.setPassword(userSer.passwordEncrypt(user.getPassword()));
 		
-		return new ResponseEntity<UserDTO>(userSer.save(user), HttpStatus.CREATED);
+		return new ResponseEntity<User>(userSer.save(user), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/{id}",method = RequestMethod.GET)
-	public ResponseEntity<UserDTO> findOne(@PathVariable Long id) {
+	public ResponseEntity<User> findOne(@PathVariable Long id) {
 		
 		
-		return new ResponseEntity<UserDTO>(userSer.findOne(id), HttpStatus.OK);
+		return new ResponseEntity<User>(userSer.findOne(id), HttpStatus.OK);
 	}
 }

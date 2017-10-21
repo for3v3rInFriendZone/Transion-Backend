@@ -22,6 +22,9 @@ public class TokenAuthenticationService {
 	static final String HEADER_STRING = "Authorization";
 
 	static void addAuthentication(HttpServletResponse res, String username) {
+		res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Authorization, Origin, Content-Type, Version");
+	    res.setHeader("Access-Control-Expose-Headers", "X-Requested-With, Authorization, Origin, Content-Type");
+	    
 		String JWT = Jwts.builder()
 	        .setSubject(username)
 	        .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))

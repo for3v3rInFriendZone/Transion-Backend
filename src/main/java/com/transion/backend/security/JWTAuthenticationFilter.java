@@ -86,6 +86,9 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
+        
+		res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Authorization, Origin, Content-Type, Version");
+	    res.setHeader("Access-Control-Expose-Headers", "X-Requested-With, Authorization, Origin, Content-Type");
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 }

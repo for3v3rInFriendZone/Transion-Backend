@@ -6,9 +6,9 @@ import com.transion.backend.model.User;
 
 public interface UserService extends UserDetailsService{
 	
-	public UserDTO save(User user);
+	public User save(User user);
 
-	public UserDTO findOne(Long id);
+	public User findOne(Long id);
 
 	public Iterable<User> findAll();
 
