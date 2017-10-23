@@ -39,13 +39,9 @@ public class JWTAuthenticatinProvider implements AuthenticationProvider{
         
         User user = userService.findByUsername(username);
         
-        if(user == null)
-			try {
-				throw new NotFoundException("User not found.");
-			} catch (NotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        if(user == null || !encoder.matches(password, user.getPassword())) {
+        	return null;
+        }
         
         List<GrantedAuthority> authorities = user.getRoles().stream()
         		.map(authority -> new SimpleGrantedAuthority(authority.getRole()))
