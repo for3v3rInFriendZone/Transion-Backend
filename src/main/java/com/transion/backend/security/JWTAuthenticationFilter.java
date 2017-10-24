@@ -16,6 +16,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,7 +51,7 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
 	static final long EXPIRATIONTIME = 864_000_000; // 10 days
 	static final String SECRET = "ThisIsASecret";
-	static final String TOKEN_PREFIX = "Bearer";
+	static final String TOKEN_PREFIX = "Bearer ";
 	static final String HEADER_STRING = "Authorization";
 
 	private AuthenticationManager authenticationManager;
@@ -90,5 +93,21 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Authorization, Origin, Content-Type, Version");
 	    res.setHeader("Access-Control-Expose-Headers", "X-Requested-With, Authorization, Origin, Content-Type");
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        
+        JSONArray authorities = new JSONArray();
+        
+        auth.getAuthorities().stream().forEach(s -> authorities.put(s.toString()));
+        
+        JSONObject user = new JSONObject();
+        try {
+			user.put("username", auth.getPrincipal());
+			user.put("authorities", authorities);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        res.getOutputStream().write(user.toString().getBytes());
+        res.getOutputStream().flush();
     }
 }
