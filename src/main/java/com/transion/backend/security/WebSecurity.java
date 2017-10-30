@@ -1,5 +1,7 @@
 package com.transion.backend.security;
 
+import java.util.Arrays;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.sun.net.httpserver.HttpsParameters;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter{
@@ -76,13 +80,22 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
     }
 
     
-
+    
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
     	final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    	CorsConfiguration customCorsConf = new CorsConfiguration();
+    	customCorsConf.addAllowedOrigin("*");
+    	customCorsConf.setAllowedMethods(Arrays.asList(
+				HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(), HttpMethod.DELETE.name()));
+    	customCorsConf.addAllowedHeader("*");
+    	customCorsConf.setAllowCredentials(true);
+    	customCorsConf.setMaxAge(1800L);
+	    source.registerCorsConfiguration("/**", customCorsConf);
+	    
 	    return source;
     }
+    
     
     @Bean
     @Override
