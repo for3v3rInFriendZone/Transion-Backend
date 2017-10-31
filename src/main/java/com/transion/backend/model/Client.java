@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.transion.backend.model.address.Address;
+import com.transion.backend.model.importexport.Field;
 import com.transion.backend.model.scenario.Task;
 
 @Entity
@@ -46,7 +47,7 @@ public class Client implements Serializable {
 	private String email;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "RESPONSIBLEUSER_ID", nullable = false)
+	@JoinColumn(name = "RESPONSIBLEUSER_ID")
 	private ResponsibleUser responsibleUser;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -148,6 +149,18 @@ public class Client implements Serializable {
 
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
+	}
+	
+	public static List<Field> clientFields(){
+		List<Field> fields = new ArrayList<Field>();
+		fields.add(new Field("Name", "String", true));
+		fields.add(new Field("PIB", "String", true));
+		fields.add(new Field("External unique key", "String", true));
+		fields.add(new Field("Telephone", "String", false));
+		fields.add(new Field("Email", "String", false));
+		fields.add(new Field("Address", "String", true));
+		fields.add(new Field("Responsible User", "String", false));
+		return fields;
 	}
 
 }

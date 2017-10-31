@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.transion.backend.model.Client;
 import com.transion.backend.model.importexport.Field;
 import com.transion.backend.repository.importexport.FieldRepository;
 import com.transion.backend.service.importexport.FieldService;
@@ -53,6 +54,11 @@ public class FieldServiceImpl implements FieldService{
 	@Override
 	public void deleteAll(List<Field> fields) {
 		fieldRepository.delete(fields);
+	}
+
+	@Override
+	public List<Field> getListOfFields(MappingType type) {
+		return Client.clientFields();
 	}
 
 }

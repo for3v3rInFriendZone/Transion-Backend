@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.transion.backend.model.importexport.Field;
 import com.transion.backend.service.importexport.FieldService;
+import com.transion.backend.service.importexport.impl.MappingType;
 
 @RestController
 @RequestMapping(value = "/field")
@@ -85,5 +86,10 @@ public class FieldController {
 	public ResponseEntity<Field> deleteAll(){
 		fService.deleteAll();
 		return new ResponseEntity<Field>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/fields", method = RequestMethod.GET)
+	public ResponseEntity<List<Field>> getFields(){
+		return new ResponseEntity<List<Field>>(fService.getListOfFields(MappingType.CLIENT), HttpStatus.OK);
 	}
 }
