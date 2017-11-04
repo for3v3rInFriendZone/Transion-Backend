@@ -1,7 +1,9 @@
 package com.transion.backend.service;
 
+import java.util.Date;
 import java.util.List;
 
+import com.transion.backend.model.Client;
 import com.transion.backend.model.Transaction;
 
 public interface TransactionService {
@@ -21,4 +23,12 @@ public interface TransactionService {
 	public void deleteAll();
 	
 	public void deleteAll(List<Transaction> transactions);
+	
+	public List<Transaction> findByClient(Client client);
+	
+	public Long calculateDelay(Date todaysDate, Date dateToPay);
+	
+	public List<Transaction> getOnlyPaidTransactions(List<Transaction> transactions);
+	
+	public List<Transaction> getOnlyNotPaidTransactions(List<Transaction> transactions);
 }

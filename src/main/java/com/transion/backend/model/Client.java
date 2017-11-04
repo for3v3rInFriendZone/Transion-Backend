@@ -45,11 +45,11 @@ public class Client implements Serializable {
 	@Column(name = "EMAIL")
 	private String email;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne()
 	@JoinColumn(name = "RESPONSIBLEUSER_ID", nullable = false)
 	private ResponsibleUser responsibleUser;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne()
 	@JoinColumn(name = "ADDRESS_ID", nullable = false)
 	private Address address;
 
@@ -58,9 +58,6 @@ public class Client implements Serializable {
 
 	@Column(name = "UPDATEDON")
 	private Date updatedOn;
-
-	@OneToMany(mappedBy = "client")
-	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
 	public Long getId() {
 		return id;
@@ -140,14 +137,6 @@ public class Client implements Serializable {
 
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
-	}
-
-	public List<Transaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
 	}
 
 }

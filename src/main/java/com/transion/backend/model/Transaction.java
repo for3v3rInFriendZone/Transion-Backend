@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.transion.backend.model.scenario.Media;
 import com.transion.backend.model.scenario.Task;
@@ -29,16 +31,22 @@ public class Transaction implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "CREATIONDATE", nullable = false)
+	private Date creationDate;
+
+	@Temporal(TemporalType.DATE)
 	@Column(name = "LASTDATETOPAY")
 	private Date lastDayToPay;
 
-	@Column(name = "PAYDATE")
-	private Date payDate;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "PAIDDATE")
+	private Date paidDate;
 
 	@Column(name = "DELAY")
-	private Integer delay;
+	private Long delay;
 
-	@Column(name = "AMOUNT")
+	@Column(name = "AMOUNT", nullable = false)
 	private Double amount;
 
 	@ManyToOne
@@ -69,19 +77,19 @@ public class Transaction implements Serializable {
 		this.lastDayToPay = lastDayToPay;
 	}
 
-	public Date getPayDate() {
-		return payDate;
+	public Date getPaidDate() {
+		return paidDate;
 	}
 
-	public void setPayDate(Date payDate) {
-		this.payDate = payDate;
+	public void setPaidDate(Date paidDate) {
+		this.paidDate = paidDate;
 	}
 
-	public Integer getDelay() {
+	public Long getDelay() {
 		return delay;
 	}
 
-	public void setDelay(Integer delay) {
+	public void setDelay(Long delay) {
 		this.delay = delay;
 	}
 
@@ -139,6 +147,14 @@ public class Transaction implements Serializable {
 
 	public void setTask(Task task) {
 		this.task = task;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
 }

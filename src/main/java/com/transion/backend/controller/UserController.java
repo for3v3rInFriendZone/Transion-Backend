@@ -24,7 +24,7 @@ public class UserController {
 	public ResponseEntity<List<User>> getUsers() {
 
 		List<User> users = (List<User>) userSer.findAll();
-		return new ResponseEntity<List<User>>(users, HttpStatus.OK); 
+		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
@@ -38,36 +38,35 @@ public class UserController {
 		return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<User> saveUser(@RequestBody User user) {
-		
+
 		user.setPassword(userSer.passwordEncrypt(user.getPassword()));
-		
+
 		return new ResponseEntity<User>(userSer.save(user), HttpStatus.CREATED);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
-		
+
 		User userDB = userSer.findByUsername(user.getUsername());
 		/*
-		if(!userSer.checkPassword(user.getPassword(), userDB.getPassword())){
-			user.setPassword(userSer.passwordEncrypt(user.getPassword()));
-		}
-		*/		
+		 * if(!userSer.checkPassword(user.getPassword(), userDB.getPassword())){
+		 * user.setPassword(userSer.passwordEncrypt(user.getPassword())); }
+		 */
 		return new ResponseEntity<User>(userSer.save(user), HttpStatus.CREATED);
 	}
-	
-	@RequestMapping(value="/{id}",method = RequestMethod.GET)
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<User> findOne(@PathVariable Long id) {
-		
+
 		return new ResponseEntity<User>(userSer.findOne(id), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/{username}",method = RequestMethod.GET)
+
+	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
 	public ResponseEntity<User> findOneByUsername(@PathVariable String username) {
-		
+
 		return new ResponseEntity<User>(userSer.findByUsername(username), HttpStatus.OK);
 	}
 }
