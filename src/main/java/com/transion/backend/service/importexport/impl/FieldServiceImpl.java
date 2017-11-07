@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.transion.backend.model.Client;
 import com.transion.backend.model.importexport.Field;
+import com.transion.backend.model.importexport.MappingType;
 import com.transion.backend.repository.importexport.FieldRepository;
 import com.transion.backend.service.importexport.FieldService;
 
@@ -59,6 +60,11 @@ public class FieldServiceImpl implements FieldService{
 	@Override
 	public List<Field> getListOfFields(MappingType type) {
 		return Client.clientFields();
+	}
+
+	@Override
+	public void updateMappingId(Long mappingId, Long fieldId) {
+		fieldRepository.updateMapping(mappingId, fieldId);
 	}
 
 }

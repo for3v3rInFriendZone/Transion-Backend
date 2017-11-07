@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.transion.backend.dto.exportimport.MappingDto;
+import com.transion.backend.model.importexport.Field;
 import com.transion.backend.model.importexport.Mapping;
 import com.transion.backend.repository.importexport.MappingRepository;
+import com.transion.backend.service.importexport.FieldService;
 import com.transion.backend.service.importexport.MappingService;
 
 @Service
@@ -15,9 +18,22 @@ public class MappingServiceImpl implements MappingService{
 	@Autowired
 	MappingRepository mappingRepository;
 	
+	@Autowired
+	FieldService fService;
+	
 	@Override
-	public Mapping save(Mapping mapping) {
-		return mappingRepository.save(mapping);
+	public Mapping save(MappingDto mappingDto) {
+		Mapping m = new Mapping();
+		m.setLabel(mappingDto.getLabel());
+		m.setType(mappingDto.getType());
+		mappingRepository.save(m);
+		
+		for(Field f : mappingDto.getFields()) {
+			f.setMapping(m);
+			fService.save(f);
+		}
+		
+		return m;
 	}
 
 	@Override

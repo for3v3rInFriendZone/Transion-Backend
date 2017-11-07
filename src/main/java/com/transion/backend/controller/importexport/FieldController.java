@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transion.backend.model.importexport.Field;
+import com.transion.backend.model.importexport.MappingType;
 import com.transion.backend.service.importexport.FieldService;
-import com.transion.backend.service.importexport.impl.MappingType;
 
 @RestController
 @RequestMapping(value = "/field")

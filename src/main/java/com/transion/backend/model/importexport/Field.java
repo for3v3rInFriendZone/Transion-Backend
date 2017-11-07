@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +30,10 @@ public class Field implements Serializable{
 	
 	@Column(name = "IS_REQUIRED")
 	private boolean required;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "MAPPING_ID", nullable = false)
+	private Mapping mapping;
 
 	public Long getId() {
 		return id;
@@ -59,6 +66,14 @@ public class Field implements Serializable{
 	public void setRequired(boolean required) {
 		this.required = required;
 	}
+	
+	public Mapping getMapping() {
+		return mapping;
+	}
+
+	public void setMapping(Mapping mapping) {
+		this.mapping = mapping;
+	}
 
 	public Field() {
 		super();
@@ -70,4 +85,5 @@ public class Field implements Serializable{
 		this.type = type;
 		this.required = required;
 	}
+	
 }

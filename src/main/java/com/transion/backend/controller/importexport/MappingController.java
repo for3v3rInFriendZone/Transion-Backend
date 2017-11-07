@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transion.backend.dto.exportimport.MappingDto;
 import com.transion.backend.model.importexport.Mapping;
 import com.transion.backend.service.importexport.MappingService;
 
@@ -30,13 +31,13 @@ public class MappingController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Mapping> save(@RequestBody Mapping mapping){
-		if(mapping == null) {
+	public ResponseEntity<Mapping> save(@RequestBody MappingDto mappingDto){
+		if(mappingDto == null) {
 			logger.error("Mapping is null.");
 			return new ResponseEntity<Mapping>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Mapping mapping2 = mService.save(mapping);
+		Mapping mapping2 = mService.save(mappingDto);
 		
 		if(mapping2 == null) {
 			logger.error("Mapping is null.");
