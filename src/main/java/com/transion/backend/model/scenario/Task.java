@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,11 +39,8 @@ public class Task implements Serializable {
 	private String label;
 
 	@ManyToOne
-	@JoinColumn(name = "MEDIA_ID")
-	private Media media;
-
-	@OneToMany(mappedBy = "task")
-	private List<Transaction> transactions = new ArrayList<Transaction>();
+	@JoinColumn(name = "STEP_ID")
+	private ScenarioStep step;
 
 	public Long getId() {
 		return id;
@@ -60,20 +58,12 @@ public class Task implements Serializable {
 		this.label = label;
 	}
 
-	public List<Transaction> getTransactions() {
-		return transactions;
+	public ScenarioStep getStep() {
+		return step;
 	}
 
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
-	}
-
-	public Media getMedia() {
-		return media;
-	}
-
-	public void setMedia(Media media) {
-		this.media = media;
+	public void setStep(ScenarioStep step) {
+		this.step = step;
 	}
 
 }

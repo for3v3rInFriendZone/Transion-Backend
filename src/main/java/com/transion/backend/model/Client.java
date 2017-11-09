@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -58,6 +60,13 @@ public class Client implements Serializable {
 
 	@Column(name = "UPDATEDON")
 	private Date updatedOn;
+	
+	@Enumerated(EnumType.STRING)
+	private ClientStatus status;
+	
+	public enum ClientStatus {
+	    ACTIVE, INACTIVE
+	}
 	
 	public Long getId() {
 		return id;
@@ -137,6 +146,14 @@ public class Client implements Serializable {
 
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
+	}
+
+	public ClientStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ClientStatus status) {
+		this.status = status;
 	}
 
 }
