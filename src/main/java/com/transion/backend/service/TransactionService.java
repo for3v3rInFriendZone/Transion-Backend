@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.transion.backend.model.Client;
 import com.transion.backend.model.Transaction;
+import com.transion.backend.model.scenario.Task;
 
 public interface TransactionService {
 
@@ -25,6 +26,8 @@ public interface TransactionService {
 	public void deleteAll(List<Transaction> transactions);
 	
 	public List<Transaction> findByClient(Client client);
+	
+	public List<Transaction> findByTask(Task task);
 	
 	public Long calculateDelay(Date todaysDate, Date dateToPay);
 	

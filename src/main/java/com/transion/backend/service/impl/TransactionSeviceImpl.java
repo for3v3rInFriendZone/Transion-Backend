@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.transion.backend.model.Client;
 import com.transion.backend.model.Transaction;
+import com.transion.backend.model.scenario.Task;
 import com.transion.backend.repository.ClientRepository;
 import com.transion.backend.repository.TransactionRepository;
 import com.transion.backend.service.ClientService;
@@ -31,14 +32,22 @@ public class TransactionSeviceImpl implements TransactionService{
 	
 	@Override
 	public Transaction save(Transaction transaction) {
-		transaction.setDelay(this.calculateDelay(Calendar.getInstance().getTime(), transaction.getLastDayToPay()));
+		if(transaction.getPaidDate() == null) {
+			transaction.setDelay(this.calculateDelay(Calendar.getInstance().getTime(), transaction.getLastDayToPay()));
+		} else {
+			transaction.setDelay(0L);
+		}
 		return trRepository.save(transaction);
 	}
 
 	@Override
 	public List<Transaction> save(List<Transaction> transactions) {
 		for(Transaction tran: transactions) {
-			tran.setDelay(this.calculateDelay(Calendar.getInstance().getTime(), tran.getLastDayToPay()));
+			if(tran.getPaidDate() == null) {
+				tran.setDelay(this.calculateDelay(Calendar.getInstance().getTime(), tran.getLastDayToPay()));
+			} else {
+				tran.setDelay(0L);
+			}
 		}
 		return (List<Transaction>) trRepository.save(transactions);
 	}
@@ -116,6 +125,12 @@ public class TransactionSeviceImpl implements TransactionService{
 			}
 		}
 		return notPaid;
+	}
+
+	@Override
+	public List<Transaction> findByTask(Task task) {
+		// TODO Auto-generated method stub
+		return trRepository.findByTaskOrderByCreationDateAsc(task);
 	}
 
 }

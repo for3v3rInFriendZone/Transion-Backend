@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.transion.backend.model.Client;
 import com.transion.backend.model.Transaction;
+import com.transion.backend.model.scenario.Task;
 import com.transion.backend.service.ClientService;
 import com.transion.backend.service.TransactionService;
 
@@ -125,6 +126,17 @@ public class TransactionController {
 		tService.save(transactions);
 
 		return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/task", method = RequestMethod.POST)
+	public ResponseEntity<List<Transaction>> findTranactionsByTask(@RequestBody Task task) {
+
+		if (task == null) {
+			logger.error("Task is null.");
+			return new ResponseEntity<List<Transaction>>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<List<Transaction>>(tService.findByTask(task), HttpStatus.OK);
 	}
 
 }

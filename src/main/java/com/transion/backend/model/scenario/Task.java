@@ -1,25 +1,14 @@
 package com.transion.backend.model.scenario;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.transion.backend.model.Client;
-import com.transion.backend.model.Transaction;
-
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -41,6 +30,14 @@ public class Task implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "STEP_ID")
 	private ScenarioStep step;
+
+	@ManyToOne
+	@JoinColumn(name = "CLIENT_ID")
+	private Client client;
+	
+	public Task() {
+		
+	}
 
 	public Long getId() {
 		return id;
@@ -64,6 +61,14 @@ public class Task implements Serializable {
 
 	public void setStep(ScenarioStep step) {
 		this.step = step;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 }
