@@ -43,7 +43,7 @@ public class User implements Serializable {
 	@Column(name = "USER_PASSWORD", nullable = false)
 	private String password;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne()
 	@JoinColumn(name = "TYPE_ID")
 	private UserType type;
 	
@@ -60,7 +60,7 @@ public class User implements Serializable {
 	private Date updatedOn;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private List<Role> roles = new ArrayList<Role>();
 
 	public User() {
