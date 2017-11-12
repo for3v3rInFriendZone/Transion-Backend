@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.transion.backend.util.ImportEnum;
+
 @Entity
 @Table(name = "FIELD")
 public class Field implements Serializable{
@@ -35,6 +37,9 @@ public class Field implements Serializable{
 	@JoinColumn(name = "MAPPING_ID", nullable = false)
 	private Mapping mapping;
 
+	@Column(name = "IMPORT_ENUM")
+	private ImportEnum importEnum;
+	
 	public Long getId() {
 		return id;
 	}
@@ -75,15 +80,24 @@ public class Field implements Serializable{
 		this.mapping = mapping;
 	}
 
+	public ImportEnum getImportEnum() {
+		return importEnum;
+	}
+
+	public void setImportEnum(ImportEnum importEnum) {
+		this.importEnum = importEnum;
+	}
+
 	public Field() {
 		super();
 	}
 
-	public Field(String name, String type, boolean required) {
+	public Field(String name, String type, boolean required, ImportEnum importEnum) {
 		super();
 		this.name = name;
 		this.type = type;
 		this.required = required;
+		this.importEnum = importEnum;
 	}
 	
 }

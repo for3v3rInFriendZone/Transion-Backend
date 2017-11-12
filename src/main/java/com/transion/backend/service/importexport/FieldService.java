@@ -3,6 +3,7 @@ package com.transion.backend.service.importexport;
 import java.util.List;
 
 import com.transion.backend.model.importexport.Field;
+import com.transion.backend.model.importexport.Mapping;
 import com.transion.backend.model.importexport.MappingType;
 
 public interface FieldService {
@@ -26,4 +27,6 @@ public interface FieldService {
 	public List<Field> getListOfFields(MappingType type);
 	
 	public void updateMappingId(Long mappingId, Long fieldId);
+	
+	public List<Field> findByMapping(Mapping mapping);
 }

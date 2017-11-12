@@ -55,4 +55,9 @@ public class ClientServiceImpl implements ClientService{
 		clientRepository.delete(clients);
 	}
 
+	@Override
+	public Client findByExternalUniqueKey(String key) {
+		return clientRepository.findByExternalUniqueKey(key);
+	}
+
 }
