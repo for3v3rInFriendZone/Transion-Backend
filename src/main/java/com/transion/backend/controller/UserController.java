@@ -1,6 +1,8 @@
 package com.transion.backend.controller;
 
 import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.transion.backend.model.Transaction;
 import com.transion.backend.model.User;
+import com.transion.backend.model.scenario.Task;
 import com.transion.backend.service.UserService;
 
 @RestController
@@ -20,10 +26,30 @@ public class UserController {
 	@Autowired
 	UserService userSer;
 
+	Logger logger = Logger.getLogger(this.getClass());
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<User>> getUsers() {
 
 		List<User> users = (List<User>) userSer.findAll();
+		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/notLoged", params = { "logedUser" }, method = RequestMethod.GET)
+	public ResponseEntity<List<User>> getOnlyNotLogedUsers(@RequestParam(value = "logedUser") String logedUser) {
+		if (logedUser == null) {
+			logger.error("User email has not been sent.");
+			return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
+		}
+
+		List<User> users = (List<User>) userSer.findAll();
+		for (User u : users) {
+			if (u.getEmail().equals(logedUser)) {
+				users.remove(u);
+				break;
+			}
+		}
+
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
@@ -45,6 +71,30 @@ public class UserController {
 		user.setPassword(userSer.passwordEncrypt(user.getPassword()));
 
 		return new ResponseEntity<User>(userSer.save(user), HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<User> delete(@PathVariable Long id) {
+		if (id == null) {
+			logger.error("Id is null.");
+			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		}
+
+		User user = userSer.findOne(id);
+
+		if (user == null) {
+			logger.error("User doesn't exist.");
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		}
+
+		userSer.delete(id);
+		return new ResponseEntity<User>(new User(), HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<User> deleteAll() {
+		userSer.deleteAll();
+		return new ResponseEntity<User>(HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
