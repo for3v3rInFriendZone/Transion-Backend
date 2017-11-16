@@ -2,6 +2,9 @@ package com.transion.backend.service.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +13,14 @@ import com.transion.backend.repository.ClientRepository;
 import com.transion.backend.service.ClientService;
 
 @Service
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
 
 	@Autowired
 	ClientRepository clientRepository;
-	
+
+	@PersistenceContext
+	private EntityManager em;
+
 	@Override
 	public Client save(Client client) {
 		return clientRepository.save(client);
@@ -53,6 +59,14 @@ public class ClientServiceImpl implements ClientService{
 	@Override
 	public void deleteAll(List<Client> clients) {
 		clientRepository.delete(clients);
+	}
+
+	@Override
+	public List<Client> findByStartingLetter(String letter) {
+		List<Client> clients = em
+				.createNativeQuery("SELECT * FROM CLIENT WHERE NAME LIKE ?1 ORDER BY NAME ASC", Client.class)
+				.setParameter(1, letter + "%").getResultList();
+		return clients;
 	}
 
 }

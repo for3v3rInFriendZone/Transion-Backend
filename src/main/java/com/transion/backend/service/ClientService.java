@@ -21,4 +21,6 @@ public interface ClientService {
 	public void deleteAll();
 	
 	public void deleteAll(List<Client> clients);
+	
+	public List<Client> findByStartingLetter(String letter);
 }
