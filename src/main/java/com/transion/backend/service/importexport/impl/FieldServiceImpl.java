@@ -1,11 +1,16 @@
 package com.transion.backend.service.importexport.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.transion.backend.model.Client;
+import com.transion.backend.model.Transaction;
 import com.transion.backend.model.importexport.Field;
+import com.transion.backend.model.importexport.Mapping;
+import com.transion.backend.model.importexport.MappingType;
 import com.transion.backend.repository.importexport.FieldRepository;
 import com.transion.backend.service.importexport.FieldService;
 
@@ -53,6 +58,36 @@ public class FieldServiceImpl implements FieldService{
 	@Override
 	public void deleteAll(List<Field> fields) {
 		fieldRepository.delete(fields);
+	}
+
+	@Override
+	public List<Field> getListOfFields(MappingType type) {
+		
+		List<Field> fields = new ArrayList<Field>();
+		switch (type) {
+			case CLIENT:
+				fields = Client.clientFields();
+				break;
+			case TRANSACTION:
+				fields = Transaction.transactionsFields();
+				break;
+			default:
+				fields = null;
+				break;
+		}
+		
+		return fields;
+		
+	}
+
+	@Override
+	public void updateMappingId(Long mappingId, Long fieldId) {
+		fieldRepository.updateMapping(mappingId, fieldId);
+	}
+
+	@Override
+	public List<Field> findByMapping(Mapping mapping) {
+		return fieldRepository.findByMapping(mapping);
 	}
 
 }

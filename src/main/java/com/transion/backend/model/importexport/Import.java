@@ -2,8 +2,10 @@ package com.transion.backend.model.importexport;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,28 +25,22 @@ public class Import implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany
-	@JoinColumn(name = "IMPORT_ID", referencedColumnName = "id")
-	private List<ImportLine> importLines = new ArrayList<ImportLine>();
-	
 	@ManyToOne
 	@JoinColumn(name = "MAPPING_ID")
 	private Mapping mapping;
 
+	@Column(name = "CREATED_ON")
+	private Date createdOn;
+	
+	@Column(name = "LINE_NUMBER")
+	private Long lineNumber;
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public List<ImportLine> getImportLines() {
-		return importLines;
-	}
-
-	public void setImportLines(List<ImportLine> importLines) {
-		this.importLines = importLines;
 	}
 
 	public Mapping getMapping() {
@@ -54,4 +50,13 @@ public class Import implements Serializable{
 	public void setMapping(Mapping mapping) {
 		this.mapping = mapping;
 	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+	
 }

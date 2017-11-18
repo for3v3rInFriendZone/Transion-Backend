@@ -68,5 +68,8 @@ public class ClientServiceImpl implements ClientService {
 				.setParameter(1, letter + "%").getResultList();
 		return clients;
 	}
+	public Client findByExternalUniqueKey(String key) {
+		return clientRepository.findByExternalUniqueKey(key);
+	}
 
 }

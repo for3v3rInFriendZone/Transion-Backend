@@ -4,23 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.transion.backend.model.address.Address;
-import com.transion.backend.model.scenario.Task;
+import com.transion.backend.model.importexport.Field;
+import com.transion.backend.util.ImportEnum;
 
 @Entity
 @Table(name = "CLIENT")
@@ -47,13 +42,12 @@ public class Client implements Serializable {
 	@Column(name = "EMAIL")
 	private String email;
 
-	@ManyToOne()
-	@JoinColumn(name = "RESPONSIBLEUSER_ID", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "RESPONSIBLEUSER_ID")
 	private ResponsibleUser responsibleUser;
 
-	@ManyToOne()
-	@JoinColumn(name = "ADDRESS_ID", nullable = false)
-	private Address address;
+	@Column(name = "ADDRESS")
+	private String address;
 
 	@Column(name = "CREATEDON")
 	private Date createdOn;
@@ -124,11 +118,11 @@ public class Client implements Serializable {
 		this.responsibleUser = responsibleUser;
 	}
 
-	public Address getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
@@ -154,6 +148,18 @@ public class Client implements Serializable {
 
 	public void setStatus(ClientStatus status) {
 		this.status = status;
+	}
+	
+	public static List<Field> clientFields(){
+		List<Field> fields = new ArrayList<Field>();
+		fields.add(new Field("Name", "String", true, ImportEnum.CLIENT_NAME));
+		fields.add(new Field("PIB", "String", true, ImportEnum.CLIENT_PIB));
+		fields.add(new Field("External unique key", "String", true, ImportEnum.CLIENT_EXTERNALUNIQUEKEY));
+		fields.add(new Field("Telephone", "String", false, ImportEnum.CLIENT_TELEPHONE));
+		fields.add(new Field("Email", "String", false, ImportEnum.CLIENT_EMAIL));
+		fields.add(new Field("Address", "String", true, ImportEnum.CLIENT_ADDRESS));
+		fields.add(new Field("Responsible User", "String", false, ImportEnum.CLIENT_RESPONSIBLEUSER));
+		return fields;
 	}
 
 }

@@ -23,4 +23,7 @@ public interface ClientService {
 	public void deleteAll(List<Client> clients);
 	
 	public List<Client> findByStartingLetter(String letter);
+
+	public Client findByExternalUniqueKey(String key);
+
 }

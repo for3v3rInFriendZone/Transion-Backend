@@ -19,8 +19,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.transion.backend.model.importexport.Field;
 import com.transion.backend.model.scenario.Media;
 import com.transion.backend.model.scenario.Task;
+import com.transion.backend.util.ImportEnum;
 
 @Entity
 @Table(name = "TRANSACTION")
@@ -37,7 +39,7 @@ public class Transaction implements Serializable {
 	private Date creationDate;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "LASTDATETOPAY")
+	@Column(name = "LASTDATETOPAY", nullable = false)
 	private Date lastDayToPay;
 
 	@Temporal(TemporalType.DATE)
@@ -55,7 +57,7 @@ public class Transaction implements Serializable {
 	private TransactionStatus status;
 
 	@ManyToOne
-	@JoinColumn(name = "CLIENT_ID")
+	@JoinColumn(name = "CLIENT_ID", nullable = false)
 	private Client client;
 
 	@OneToMany
@@ -148,6 +150,19 @@ public class Transaction implements Serializable {
 
 	public void setTask(Task task) {
 		this.task = task;
+	}
+	
+	public static List<Field> transactionsFields(){
+		List<Field> fields = new ArrayList<Field>();
+		
+		fields.add(new Field("Last day to pay", "Date", true, ImportEnum.TRANSACTION_LASTDAYTOPAY));
+		fields.add(new Field("Pay date", "Date", false, ImportEnum.TRANSACTION_PAYDATE));
+		fields.add(new Field("Delay", "Integer", false, ImportEnum.TRANSACTION_DELAY));
+		fields.add(new Field("Amount", "Double", true, ImportEnum.TRANSACTION_AMOUNT));
+		fields.add(new Field("Status", "Long", false, ImportEnum.TRANSACTION_STATUS));
+		fields.add(new Field("Client", "String", true, ImportEnum.TRANSACTION_CLIENT));
+		
+		return fields;
 	}
 
 	public Date getCreationDate() {

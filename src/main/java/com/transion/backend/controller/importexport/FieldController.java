@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transion.backend.model.importexport.Field;
+import com.transion.backend.model.importexport.MappingType;
 import com.transion.backend.service.importexport.FieldService;
 
 @RestController
@@ -85,5 +87,11 @@ public class FieldController {
 	public ResponseEntity<Field> deleteAll(){
 		fService.deleteAll();
 		return new ResponseEntity<Field>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/fields/{type}", method = RequestMethod.GET)
+	public ResponseEntity<List<Field>> getFields(@PathVariable("type") MappingType type){
+		System.out.println("dasd");
+		return new ResponseEntity<List<Field>>(fService.getListOfFields(type), HttpStatus.OK);
 	}
 }

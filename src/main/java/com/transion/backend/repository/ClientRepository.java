@@ -8,4 +8,5 @@ import com.transion.backend.model.Client;
 @Repository
 public interface ClientRepository extends CrudRepository<Client, Long>{
 
+	public Client findByExternalUniqueKey(String externalUniqueKey);
 }
