@@ -1,11 +1,9 @@
 package com.transion.backend.dto.exportimport;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.transion.backend.model.importexport.Field;
-import com.transion.backend.model.importexport.MappingType;
+import com.transion.backend.model.importexport.Mapping.MappingType;
 
 public class MappingDto {
 

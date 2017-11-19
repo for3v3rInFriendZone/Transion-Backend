@@ -15,7 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.transion.backend.model.importexport.Field;
-import com.transion.backend.util.ImportEnum;
+import com.transion.backend.model.importexport.Field.ImportEnum;
 
 @Entity
 @Table(name = "CLIENT")
@@ -159,6 +159,7 @@ public class Client implements Serializable {
 		fields.add(new Field("Email", "String", false, ImportEnum.CLIENT_EMAIL));
 		fields.add(new Field("Address", "String", true, ImportEnum.CLIENT_ADDRESS));
 		fields.add(new Field("Responsible User", "String", false, ImportEnum.CLIENT_RESPONSIBLEUSER));
+		
 		return fields;
 	}
 

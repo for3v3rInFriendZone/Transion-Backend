@@ -2,15 +2,13 @@ package com.transion.backend.service.importexport.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.transion.backend.model.Client;
 import com.transion.backend.model.Transaction;
 import com.transion.backend.model.importexport.Field;
 import com.transion.backend.model.importexport.Mapping;
-import com.transion.backend.model.importexport.MappingType;
+import com.transion.backend.model.importexport.Mapping.MappingType;
 import com.transion.backend.repository.importexport.FieldRepository;
 import com.transion.backend.service.importexport.FieldService;
 
@@ -77,7 +75,6 @@ public class FieldServiceImpl implements FieldService{
 		}
 		
 		return fields;
-		
 	}
 
 	@Override

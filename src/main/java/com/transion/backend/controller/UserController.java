@@ -1,23 +1,27 @@
 package com.transion.backend.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.transion.backend.model.Transaction;
+import com.transion.backend.model.Tax;
 import com.transion.backend.model.User;
-import com.transion.backend.model.scenario.Task;
+import com.transion.backend.model.scenario.Scenario;
+import com.transion.backend.service.TaxService;
 import com.transion.backend.service.UserService;
+
 
 @RestController
 @RequestMapping(value = "/user")
@@ -26,10 +30,25 @@ public class UserController {
 	@Autowired
 	UserService userSer;
 
+	@Autowired
+	ThreadPoolTaskScheduler tpts;
+	
+	@Autowired
+	TaxService taxSer;
+
 	Logger logger = Logger.getLogger(this.getClass());
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<User>> getUsers() {
+		
+		/*
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 14);
+		cal.set(Calendar.MINUTE, 02);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+
+		tpts.schedule(new RunnableTask("Specific time tax saved -> 2:02pm", taxSer), cal.getTime());  */
 
 		List<User> users = (List<User>) userSer.findAll();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
@@ -118,5 +137,28 @@ public class UserController {
 	public ResponseEntity<User> findOneByUsername(@PathVariable String username) {
 
 		return new ResponseEntity<User>(userSer.findByUsername(username), HttpStatus.OK);
+	}
+
+	private static class RunnableTask implements Runnable {
+
+		private String message;
+		private TaxService taxSer;
+
+		public RunnableTask(String message, TaxService taxSer) {
+			this.message = message;
+			this.taxSer = taxSer;
+		}
+
+		@Override
+		public void run() {
+			Tax tax = new Tax();
+			tax.setName("Test Tax");
+			tax.setBase(18.20);
+			
+			taxSer.save(tax);
+			
+			System.out.println(
+					new Date() + " Runnable Task with " + message + " on thread " + Thread.currentThread().getName());
+		}
 	}
 }

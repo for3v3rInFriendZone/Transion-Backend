@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.transion.backend.util.ImportEnum;
 
 @Entity
 @Table(name = "FIELD")
@@ -27,7 +27,7 @@ public class Field implements Serializable{
 	@Column(name = "NAME")
 	private String name;
 	
-	@Column(name = "TYPE")
+	@Column(name = "FIELD_TYPE")
 	private String type;
 	
 	@Column(name = "IS_REQUIRED")
@@ -38,6 +38,7 @@ public class Field implements Serializable{
 	private Mapping mapping;
 
 	@Column(name = "IMPORT_ENUM")
+	@Enumerated(EnumType.STRING)
 	private ImportEnum importEnum;
 	
 	public Long getId() {
@@ -99,5 +100,23 @@ public class Field implements Serializable{
 		this.required = required;
 		this.importEnum = importEnum;
 	}
+	
+	public enum ImportEnum {
+		CLIENT_NAME,
+		CLIENT_PIB,
+		CLIENT_EXTERNALUNIQUEKEY,
+		CLIENT_TELEPHONE,
+		CLIENT_EMAIL,
+		CLIENT_ADDRESS,
+		CLIENT_RESPONSIBLEUSER,
+		TRANSACTION_LASTDAYTOPAY,
+		TRANSACTION_PAYDATE,
+		TRANSACTION_DELAY,
+		TRANSACTION_AMOUNT,
+		TRANSACTION_TRANSACTIONSTATUS,
+		TRANSACTION_CLIENT,
+		TRANSACTION_STATUS
+	}
+
 	
 }

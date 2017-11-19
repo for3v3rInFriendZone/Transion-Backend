@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,11 +21,17 @@ public class Mapping implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "TYPE")
+	@Enumerated(EnumType.STRING)
+	@Column(name = "MAP_TYPE")
 	private MappingType type;
 	
 	@Column(name = "LABEL")
 	private String label;
+	
+	public enum MappingType {
+		CLIENT,
+		TRANSACTION
+	}
 	
 	public Long getId() {
 		return id;

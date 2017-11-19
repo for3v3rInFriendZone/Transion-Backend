@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,11 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import com.transion.backend.model.importexport.Field;
+import com.transion.backend.model.importexport.Field.ImportEnum;
 import com.transion.backend.model.scenario.Media;
 import com.transion.backend.model.scenario.Task;
-import com.transion.backend.util.ImportEnum;
 
 @Entity
 @Table(name = "TRANSACTION")

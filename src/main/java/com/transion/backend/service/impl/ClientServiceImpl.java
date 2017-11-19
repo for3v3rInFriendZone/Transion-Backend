@@ -1,13 +1,10 @@
 package com.transion.backend.service.impl;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.transion.backend.model.Client;
 import com.transion.backend.repository.ClientRepository;
 import com.transion.backend.service.ClientService;
