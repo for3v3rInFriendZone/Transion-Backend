@@ -28,4 +28,6 @@ public interface FieldService {
 	public void updateMappingId(Long mappingId, Long fieldId);
 	
 	public List<Field> findByMapping(Mapping mapping);
+	
+	public List<Field> findByRequired(Boolean required);
 }

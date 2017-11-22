@@ -18,4 +18,6 @@ public interface FieldRepository extends CrudRepository<Field, Long>{
 	public void updateMapping(Long mappingId, Long fieldId);
 	
 	public List<Field> findByMapping(Mapping mapping);
+	
+	public List<Field> findByRequired(Boolean required);
 }

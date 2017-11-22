@@ -87,4 +87,10 @@ public class FieldServiceImpl implements FieldService{
 		return fieldRepository.findByMapping(mapping);
 	}
 
+	@Override
+	public List<Field> findByRequired(Boolean required) {
+		// TODO Auto-generated method stub
+		return fieldRepository.findByRequired(required);
+	}
+
 }

@@ -31,9 +31,9 @@ public class Field implements Serializable{
 	private String type;
 	
 	@Column(name = "IS_REQUIRED")
-	private boolean required;
+	private Boolean required;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name = "MAPPING_ID", nullable = false)
 	private Mapping mapping;
 
@@ -65,11 +65,11 @@ public class Field implements Serializable{
 		this.type = type;
 	}
 
-	public boolean isRequired() {
+	public Boolean isRequired() {
 		return required;
 	}
 
-	public void setRequired(boolean required) {
+	public void setRequired(Boolean required) {
 		this.required = required;
 	}
 	
@@ -93,7 +93,7 @@ public class Field implements Serializable{
 		super();
 	}
 
-	public Field(String name, String type, boolean required, ImportEnum importEnum) {
+	public Field(String name, String type, Boolean required, ImportEnum importEnum) {
 		super();
 		this.name = name;
 		this.type = type;

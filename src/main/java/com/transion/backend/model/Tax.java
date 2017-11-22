@@ -11,14 +11,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TAX")
-public class Tax implements Serializable{
+public class Tax implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "NAME")
 	private String name;
 

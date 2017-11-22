@@ -29,8 +29,14 @@ public class Mapping implements Serializable{
 	private String label;
 	
 	public enum MappingType {
-		CLIENT,
-		TRANSACTION
+		CLIENT("CLIENT"),
+		TRANSACTION("TRANSACTION");
+		
+		private String name;
+		
+		private MappingType(String name) {
+			this.name = name;
+		}
 	}
 	
 	public Long getId() {

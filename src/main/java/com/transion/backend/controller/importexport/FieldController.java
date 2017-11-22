@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.transion.backend.model.importexport.Field;
+import com.transion.backend.model.importexport.Mapping;
 import com.transion.backend.model.importexport.Mapping.MappingType;
 import com.transion.backend.service.importexport.FieldService;
 
@@ -87,9 +88,24 @@ public class FieldController {
 		return new ResponseEntity<Field>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/fields/{type}", method = RequestMethod.GET)
-	public ResponseEntity<List<Field>> getFields(@PathVariable("type") MappingType type){
-		System.out.println("dasd");
+	@RequestMapping(value="/mappingType", method = RequestMethod.GET)
+	public ResponseEntity<List<Field>> getFields(@RequestParam(value = "type") MappingType type){
 		return new ResponseEntity<List<Field>>(fService.getListOfFields(type), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/mapping", method = RequestMethod.POST)
+	public ResponseEntity<List<Field>> findByMapping(@RequestBody Mapping mapping) {
+		if(mapping == null) {
+			logger.error("Mapping is null.");
+			return new ResponseEntity<List<Field>>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<List<Field>>(fService.findByMapping(mapping), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/required", method = RequestMethod.GET)
+	public ResponseEntity<List<Field>> getRequiredFields(@RequestParam(value = "required") Boolean required){
+	
+		return new ResponseEntity<List<Field>>(fService.findByRequired(required), HttpStatus.OK);
 	}
 }
