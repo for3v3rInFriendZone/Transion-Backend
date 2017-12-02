@@ -2,6 +2,8 @@ package com.transion.backend.service.importexport.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.transion.backend.model.Client;
@@ -17,6 +19,9 @@ public class FieldServiceImpl implements FieldService{
 
 	@Autowired
 	FieldRepository fieldRepository;
+	
+	@PersistenceContext
+    private EntityManager em;
 	
 	@Override
 	public Field save(Field field) {
@@ -59,8 +64,9 @@ public class FieldServiceImpl implements FieldService{
 	}
 
 	@Override
-	public List<Field> getListOfFields(MappingType type) {
+	public List<Field> getListOfAvalaibleFields(MappingType type) {
 		
+		/*
 		List<Field> fields = new ArrayList<Field>();
 		switch (type) {
 			case CLIENT:
@@ -72,7 +78,10 @@ public class FieldServiceImpl implements FieldService{
 			default:
 				fields = null;
 				break;
-		}
+		} */
+		List<Field> fields = new ArrayList<Field>();
+		fields = em.createNativeQuery("SELECT * FROM FIELD WHERE MAPPING_ID IS NULL AND IMPORT_ENUM LIKE ?1",
+				Field.class).setParameter(1, type.toString() + "%").getResultList();
 		
 		return fields;
 	}
@@ -88,9 +97,20 @@ public class FieldServiceImpl implements FieldService{
 	}
 
 	@Override
-	public List<Field> findByRequired(Boolean required) {
+	public List<Field> findByRequired(Boolean required, String type) {
 		// TODO Auto-generated method stub
-		return fieldRepository.findByRequired(required);
+		List<Field> fields = new ArrayList<Field>();
+		fields = em.createNativeQuery("SELECT * FROM FIELD WHERE IS_REQUIRED = ?1 AND IMPORT_ENUM LIKE ?2",
+				Field.class).setParameter(1, required).setParameter(2, type.toString() + "%").getResultList();
+		
+		return fields;
+		//return fieldRepository.findByRequired(required);
+	}
+
+	@Override
+	public List<Field> getListOfUsedFields(MappingType type) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

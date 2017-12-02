@@ -90,7 +90,7 @@ public class FieldController {
 	
 	@RequestMapping(value="/mappingType", method = RequestMethod.GET)
 	public ResponseEntity<List<Field>> getFields(@RequestParam(value = "type") MappingType type){
-		return new ResponseEntity<List<Field>>(fService.getListOfFields(type), HttpStatus.OK);
+		return new ResponseEntity<List<Field>>(fService.getListOfAvalaibleFields(type), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/mapping", method = RequestMethod.POST)
@@ -104,8 +104,9 @@ public class FieldController {
 	}
 	
 	@RequestMapping(value="/required", method = RequestMethod.GET)
-	public ResponseEntity<List<Field>> getRequiredFields(@RequestParam(value = "required") Boolean required){
+	public ResponseEntity<List<Field>> getRequiredFields(@RequestParam(value = "required") Boolean required,
+			@RequestParam(value = "type") String type){
 	
-		return new ResponseEntity<List<Field>>(fService.findByRequired(required), HttpStatus.OK);
+		return new ResponseEntity<List<Field>>(fService.findByRequired(required, type), HttpStatus.OK);
 	}
 }

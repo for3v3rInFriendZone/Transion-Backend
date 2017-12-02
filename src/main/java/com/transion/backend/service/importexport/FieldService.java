@@ -23,11 +23,13 @@ public interface FieldService {
 	
 	public void deleteAll(List<Field> fields);
 
-	public List<Field> getListOfFields(MappingType type);
+	public List<Field> getListOfAvalaibleFields(MappingType type);
+	
+	public List<Field> getListOfUsedFields(MappingType type);
 	
 	public void updateMappingId(Long mappingId, Long fieldId);
 	
 	public List<Field> findByMapping(Mapping mapping);
 	
-	public List<Field> findByRequired(Boolean required);
+	public List<Field> findByRequired(Boolean required, String type);
 }

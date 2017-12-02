@@ -154,7 +154,7 @@ public class Transaction implements Serializable {
 		List<Field> fields = new ArrayList<Field>();
 		
 		fields.add(new Field("Last day to pay", "Date", true, ImportEnum.TRANSACTION_LASTDAYTOPAY));
-		fields.add(new Field("Pay date", "Date", false, ImportEnum.TRANSACTION_PAYDATE));
+		fields.add(new Field("Pay date", "Date", false, ImportEnum.TRANSACTION_PAIDDATE));
 		fields.add(new Field("Delay", "Integer", false, ImportEnum.TRANSACTION_DELAY));
 		fields.add(new Field("Amount", "Double", true, ImportEnum.TRANSACTION_AMOUNT));
 		fields.add(new Field("Status", "Long", false, ImportEnum.TRANSACTION_STATUS));

@@ -165,7 +165,7 @@ public class ImportServiceImpl implements ImportService{
 									t.setLastDayToPay(new Date());
 								}
 								break;
-							case TRANSACTION_PAYDATE:
+							case TRANSACTION_PAIDDATE:
 								if(!nextLine[j].isEmpty()) {
 									t.setPaidDate(format.parse(nextLine[j]));
 								} else {

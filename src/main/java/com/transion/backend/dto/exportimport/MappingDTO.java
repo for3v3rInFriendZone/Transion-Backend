@@ -5,7 +5,7 @@ import java.util.List;
 import com.transion.backend.model.importexport.Field;
 import com.transion.backend.model.importexport.Mapping.MappingType;
 
-public class MappingDto {
+public class MappingDTO {
 
 	private Long id;
 	private MappingType type;

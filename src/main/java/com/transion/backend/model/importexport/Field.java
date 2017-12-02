@@ -34,10 +34,10 @@ public class Field implements Serializable{
 	private Boolean required;
 	
 	@ManyToOne()
-	@JoinColumn(name = "MAPPING_ID", nullable = false)
+	@JoinColumn(name = "MAPPING_ID")
 	private Mapping mapping;
 
-	@Column(name = "IMPORT_ENUM")
+	@Column(name = "IMPORT_ENUM", unique=true)
 	@Enumerated(EnumType.STRING)
 	private ImportEnum importEnum;
 	
@@ -110,7 +110,7 @@ public class Field implements Serializable{
 		CLIENT_ADDRESS,
 		CLIENT_RESPONSIBLEUSER,
 		TRANSACTION_LASTDAYTOPAY,
-		TRANSACTION_PAYDATE,
+		TRANSACTION_PAIDDATE,
 		TRANSACTION_DELAY,
 		TRANSACTION_AMOUNT,
 		TRANSACTION_TRANSACTIONSTATUS,
@@ -118,5 +118,16 @@ public class Field implements Serializable{
 		TRANSACTION_STATUS
 	}
 
-	
+	@Override
+	public boolean equals(Object obj) {
+		boolean same = false;
+
+        if (obj != null && obj instanceof Field)
+        {
+        	same = this.getId() == ((Field) obj).getId();
+        }
+
+        return same;
+	}
+
 }

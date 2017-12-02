@@ -2,12 +2,14 @@ package com.transion.backend.service.importexport;
 
 import java.util.List;
 
-import com.transion.backend.dto.exportimport.MappingDto;
+import com.transion.backend.dto.exportimport.MappingDTO;
 import com.transion.backend.model.importexport.Mapping;
 
 public interface MappingService {
 
-	public Mapping save(MappingDto mappingDto);
+	public Mapping save(MappingDTO mappingDto);
+	
+	public Mapping update(MappingDTO mappingDto);
 	
 	public List<Mapping> save(List<Mapping> mappings);
 	
