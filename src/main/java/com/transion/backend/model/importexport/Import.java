@@ -17,24 +17,24 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "IMPORT")
-public class Import implements Serializable{
+public class Import implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "MAPPING_ID")
 	private Mapping mapping;
 
 	@Column(name = "CREATED_ON")
 	private Date createdOn;
-	
+
 	@Column(name = "LINE_NUMBER")
 	private Long lineNumber;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -58,5 +58,13 @@ public class Import implements Serializable{
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	
+
+	public Long getLineNumber() {
+		return lineNumber;
+	}
+
+	public void setLineNumber(Long lineNumber) {
+		this.lineNumber = lineNumber;
+	}
+
 }

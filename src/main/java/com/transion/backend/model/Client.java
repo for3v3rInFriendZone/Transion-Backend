@@ -30,7 +30,7 @@ public class Client implements Serializable {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	@Column(name = "PIB", nullable = false, unique = true, length = 9)
+	@Column(name = "PIB", nullable = false, unique = true, length = 4)
 	private String pib;
 
 	@Column(name = "EXTERNALUNIQUEKEY", nullable = false, unique = true, length = 8)

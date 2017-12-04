@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import com.opencsv.CSVReader;
 import com.transion.backend.model.importexport.Import;
 import com.transion.backend.model.importexport.Mapping;
 import com.transion.backend.service.importexport.ImportService;
+import com.transion.backend.service.importexport.MappingService;
 
 @RestController
 @RequestMapping(value = "/import")
@@ -29,6 +31,9 @@ public class ImportController {
 	
 	@Autowired
 	ImportService iService;
+	
+	@Autowired
+	MappingService mappingSer;
 
 	Logger logger = Logger.getLogger(this.getClass());
 	
@@ -38,15 +43,21 @@ public class ImportController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Import> save(@RequestParam(value = "file") MultipartFile file, @RequestParam Mapping mapping) throws IOException, InterruptedException, ParseException{
-		if(file == null && mapping == null) {
+	public ResponseEntity<Import> save(@RequestParam(value = "file") MultipartFile file, @RequestParam(value = "mapping") String mapping) throws IOException, InterruptedException, ParseException{
+		if(file == null) {
 			logger.error("Import is null.");
 			return new ResponseEntity<Import>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Import i = iService.importData(file, mapping);
-		iService.save(i);
-		return new ResponseEntity<Import>(HttpStatus.CREATED);
+		if(mapping == null || mapping.equals("")) {
+			logger.error("Mapping is null.");
+			return new ResponseEntity<Import>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Mapping map = mappingSer.findOne(Long.parseLong(mapping));
+		Import i = iService.importData(file, map);
+		
+		return new ResponseEntity<Import>(iService.save(i), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

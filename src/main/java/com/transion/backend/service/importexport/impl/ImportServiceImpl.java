@@ -108,7 +108,7 @@ public class ImportServiceImpl implements ImportService{
 	    
 		CSVReader reader = new CSVReader(new FileReader(convFile), '\t');
 		String[] nextLine;
-		int broj = 0;
+		Long broj = 0L;
 		List object = reader.readAll();
 		
 		for(Object o : object) {
@@ -155,7 +155,7 @@ public class ImportServiceImpl implements ImportService{
 					break;
 				case TRANSACTION:
 					Transaction t = new Transaction();
-					DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+					DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 					for(int j = 0; j < fields.size(); j++) {
 						switch (fields.get(j).getImportEnum()) {
 							case TRANSACTION_LASTDAYTOPAY:
@@ -192,7 +192,7 @@ public class ImportServiceImpl implements ImportService{
 								break;
 						}
 					}
-					
+					t.setCreationDate(new Date());
 					tService.save(t);
 					Thread.sleep(10);
 					ilService.save(new ImportLine(t.getId(), mapping));
@@ -207,6 +207,7 @@ public class ImportServiceImpl implements ImportService{
 		Import i = new Import();
 		i.setCreatedOn(new Date());
 		i.setMapping(mapping);
+		i.setLineNumber(broj);
 		return i;
 	}
 
