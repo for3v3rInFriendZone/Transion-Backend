@@ -19,6 +19,7 @@ import com.transion.backend.model.Client;
 import com.transion.backend.model.ResponsibleUser;
 import com.transion.backend.model.Transaction;
 import com.transion.backend.model.importexport.Field;
+import com.transion.backend.model.importexport.Field.ImportEnum;
 import com.transion.backend.model.importexport.Import;
 import com.transion.backend.model.importexport.ImportLine;
 import com.transion.backend.model.importexport.Mapping;
@@ -118,7 +119,16 @@ public class ImportServiceImpl implements ImportService{
 			
 			switch (mapping.getType()) {
 				case CLIENT:
-					Client c = new Client();
+					Client c = null;
+					for(int j = 0; j < fields.size(); j++) {
+						if(fields.get(j).getImportEnum() == ImportEnum.CLIENT_EXTERNALUNIQUEKEY) {
+							c = cService.findByExternalUniqueKey(nextLine[j]);
+						}
+					}
+					
+					if(c == null)
+						c = new Client();
+					
 					for(int i = 0; i < fields.size(); i++) {
 						switch (fields.get(i).getImportEnum()) {
 							case CLIENT_NAME:
