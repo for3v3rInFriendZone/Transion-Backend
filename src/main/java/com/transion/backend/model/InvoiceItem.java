@@ -30,6 +30,22 @@ public class InvoiceItem implements Serializable{
 	
 	@Column(name = "PRICE")
 	private Double price;
+	
+	@Column(name = "TAXPRICE")
+	private Double taxPrice;
+	
+	@Column(name = "AMOUNT")
+	private Double amount;
+	
+	@ManyToOne
+	@JoinColumn(name = "TAX_ID")
+	private Tax tax;
+	
+	@Column(name = "TAXAMOUNT")
+	private Double taxAmount;
+	
+	@Column(name = "RABAT")
+	private Double rabat;
 
 	public Long getId() {
 		return id;
@@ -62,4 +78,44 @@ public class InvoiceItem implements Serializable{
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
+	public Double getTaxPrice() {
+		return taxPrice;
+	}
+
+	public void setTaxPrice(Double taxPrice) {
+		this.taxPrice = taxPrice;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public Tax getTax() {
+		return tax;
+	}
+
+	public void setTax(Tax tax) {
+		this.tax = tax;
+	}
+
+	public Double getTaxAmount() {
+		return taxAmount;
+	}
+
+	public void setTaxAmount(Double taxAmount) {
+		this.taxAmount = taxAmount;
+	}
+
+	public Double getRabat() {
+		return rabat;
+	}
+
+	public void setRabat(Double rabat) {
+		this.rabat = rabat;
+	}	
 }

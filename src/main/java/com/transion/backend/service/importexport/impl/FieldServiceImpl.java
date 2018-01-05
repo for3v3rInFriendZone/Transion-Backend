@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.transion.backend.model.Client;
-import com.transion.backend.model.Transaction;
 import com.transion.backend.model.importexport.Field;
 import com.transion.backend.model.importexport.Mapping;
 import com.transion.backend.model.importexport.Mapping.MappingType;
@@ -65,9 +64,6 @@ public class FieldServiceImpl implements FieldService{
 		switch (type) {
 			case CLIENT:
 				fields = Client.clientFields();
-				break;
-			case TRANSACTION:
-				fields = Transaction.transactionsFields();
 				break;
 			default:
 				fields = null;

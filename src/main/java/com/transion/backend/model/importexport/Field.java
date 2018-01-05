@@ -38,7 +38,6 @@ public class Field implements Serializable{
 	private Mapping mapping;
 
 	@Column(name = "IMPORT_ENUM")
-	@Enumerated(EnumType.STRING)
 	private ImportEnum importEnum;
 	
 	public Long getId() {

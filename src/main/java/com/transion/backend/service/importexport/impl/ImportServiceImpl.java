@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.opencsv.CSVReader;
 import com.transion.backend.model.Client;
 import com.transion.backend.model.ResponsibleUser;
-import com.transion.backend.model.Transaction;
 import com.transion.backend.model.importexport.Field;
 import com.transion.backend.model.importexport.Field.ImportEnum;
 import com.transion.backend.model.importexport.Import;
@@ -26,8 +25,6 @@ import com.transion.backend.model.importexport.Mapping;
 import com.transion.backend.repository.importexport.ImportRepository;
 import com.transion.backend.service.ClientService;
 import com.transion.backend.service.ResponsibleUserService;
-import com.transion.backend.service.TransactionService;
-import com.transion.backend.service.TransactionStatusService;
 import com.transion.backend.service.importexport.FieldService;
 import com.transion.backend.service.importexport.ImportLineService;
 import com.transion.backend.service.importexport.ImportService;
@@ -42,9 +39,6 @@ public class ImportServiceImpl implements ImportService{
 	ClientService cService;
 	
 	@Autowired
-	TransactionService tService;
-	
-	@Autowired
 	ImportLineService ilService;
 	
 	@Autowired
@@ -52,9 +46,6 @@ public class ImportServiceImpl implements ImportService{
 	
 	@Autowired
 	ResponsibleUserService ruService;
-	
-	@Autowired
-	TransactionStatusService tsService;
 	
 	@Override
 	public Import save(Import import1) {
@@ -139,9 +130,6 @@ public class ImportServiceImpl implements ImportService{
 								if(fields.get(i).getType().equals("String"))
 									c.setPib(nextLine[i]);
 								break;
-							case CLIENT_RESPONSIBLEUSER:
-								c.setResponsibleUser(ruService.findOne(Long.parseLong(nextLine[i])));
-								break;
 							case CLIENT_ADDRESS:
 								c.setAddress(nextLine[i]);
 								break;
@@ -162,50 +150,6 @@ public class ImportServiceImpl implements ImportService{
 					cService.save(c);
 					Thread.sleep(10);
 					ilService.save(new ImportLine(c.getId(), mapping));
-					break;
-				case TRANSACTION:
-					Transaction t = new Transaction();
-					DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-					for(int j = 0; j < fields.size(); j++) {
-						switch (fields.get(j).getImportEnum()) {
-							case TRANSACTION_LASTDAYTOPAY:
-								if(!nextLine[j].isEmpty()) {
-									t.setLastDayToPay(format.parse(nextLine[j]));
-								} else {
-									t.setLastDayToPay(new Date());
-								}
-								break;
-							case TRANSACTION_PAYDATE:
-								if(!nextLine[j].isEmpty()) {
-									t.setPaidDate(format.parse(nextLine[j]));
-								} else {
-									t.setPaidDate(new Date());
-								}
-								break;
-							case TRANSACTION_DELAY:
-								if(StringUtils.isNumeric(nextLine[j])) {
-									t.setDelay(Long.parseLong(nextLine[j]));
-								} 								
-								break;
-							case TRANSACTION_AMOUNT:
-								if(NumberUtils.isNumber(nextLine[j])) {
-									t.setAmount(Double.parseDouble(nextLine[j]));
-								}
-								break;
-							case TRANSACTION_TRANSACTIONSTATUS:
-								t.setStatus(tsService.findOne(Long.parseLong(nextLine[j])));
-								break;
-							case TRANSACTION_CLIENT:
-								t.setClient(cService.findByExternalUniqueKey(nextLine[j]));
-								break;
-							default:
-								break;
-						}
-					}
-					
-					tService.save(t);
-					Thread.sleep(10);
-					ilService.save(new ImportLine(t.getId(), mapping));
 					break;
 				default:
 					break;

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.transion.backend.model.Tax;
 import com.transion.backend.model.User;
-import com.transion.backend.model.scenario.Scenario;
 import com.transion.backend.service.TaxService;
 import com.transion.backend.service.UserService;
 
