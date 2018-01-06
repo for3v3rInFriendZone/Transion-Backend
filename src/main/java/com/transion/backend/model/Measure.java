@@ -1,4 +1,4 @@
-package com.transion.backend.model.vehicle;
+package com.transion.backend.model;
 
 import java.io.Serializable;
 
@@ -10,11 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "VEHICLETYPE")
-public class VehicleType implements Serializable{
+@Table(name = "MEASURE")
+public class Measure implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -22,11 +22,8 @@ public class VehicleType implements Serializable{
 	@Column(name = "NAME")
 	private String name;
 	
-	@Column(name = "CAPACITY_FROM")
-	private Double capacityFrom;
-	
-	@Column(name = "CAPACITY_TO")
-	private Double capacityTo;
+	@Column(name = "shortcut")
+	private String shortcut;
 
 	public Long getId() {
 		return id;
@@ -44,19 +41,22 @@ public class VehicleType implements Serializable{
 		this.name = name;
 	}
 
-	public Double getCapacityFrom() {
-		return capacityFrom;
+	public String getShortcut() {
+		return shortcut;
 	}
 
-	public void setCapacityFrom(Double capacityFrom) {
-		this.capacityFrom = capacityFrom;
+	public void setShortcut(String shortcut) {
+		this.shortcut = shortcut;
 	}
 
-	public Double getCapacityTo() {
-		return capacityTo;
+	public Measure(Long id, String name, String shortcut) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.shortcut = shortcut;
 	}
 
-	public void setCapacityTo(Double capacityTo) {
-		this.capacityTo = capacityTo;
+	public Measure() {
+		super();
 	}
 }

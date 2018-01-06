@@ -19,8 +19,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.transion.backend.model.importexport.Field;
 import com.transion.backend.model.importexport.Field.ImportEnum;
-import com.transion.backend.model.scenario.Media;
-import com.transion.backend.model.scenario.Task;
 
 @Entity
 @Table(name = "TRANSACTION")
@@ -51,24 +49,12 @@ public class Transaction implements Serializable {
 	private Double amount;
 
 	@ManyToOne
-	@JoinColumn(name = "STATUS_ID")
-	private TransactionStatus status;
-
-	@ManyToOne
 	@JoinColumn(name = "CLIENT_ID", nullable = false)
 	private Client client;
 
 	@OneToMany
 	@JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "id")
-	private List<Dispute> disputes = new ArrayList<Dispute>();
-
-	@OneToMany
-	@JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "id")
 	private List<Comment> comments = new ArrayList<Comment>();
-
-	@ManyToOne
-	@JoinColumn(name = "TASK_ID")
-	private Task task;
 
 	public Date getLastDayToPay() {
 		return lastDayToPay;
@@ -102,28 +88,12 @@ public class Transaction implements Serializable {
 		this.amount = amount;
 	}
 
-	public TransactionStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(TransactionStatus status) {
-		this.status = status;
-	}
-
 	public Client getClient() {
 		return client;
 	}
 
 	public void setClient(Client client) {
 		this.client = client;
-	}
-
-	public List<Dispute> getDisputes() {
-		return disputes;
-	}
-
-	public void setDisputes(List<Dispute> disputes) {
-		this.disputes = disputes;
 	}
 
 	public List<Comment> getComments() {
@@ -140,14 +110,6 @@ public class Transaction implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Task getTask() {
-		return task;
-	}
-
-	public void setTask(Task task) {
-		this.task = task;
 	}
 	
 	public static List<Field> transactionsFields(){

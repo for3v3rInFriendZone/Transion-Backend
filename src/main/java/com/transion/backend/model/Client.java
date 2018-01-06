@@ -42,10 +42,6 @@ public class Client implements Serializable {
 	@Column(name = "EMAIL")
 	private String email;
 
-	@ManyToOne
-	@JoinColumn(name = "RESPONSIBLEUSER_ID")
-	private ResponsibleUser responsibleUser;
-
 	@Column(name = "ADDRESS")
 	private String address;
 
@@ -58,8 +54,12 @@ public class Client implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private ClientStatus status;
 	
+	@Column(name = "BANKACCOUNT")
+	private String bankAccount;
+	
 	public enum ClientStatus {
-	    ACTIVE, INACTIVE
+	    BUYER, 
+	    SUPPLIER
 	}
 	
 	public Long getId() {
@@ -110,14 +110,6 @@ public class Client implements Serializable {
 		this.email = email;
 	}
 
-	public ResponsibleUser getResponsibleUser() {
-		return responsibleUser;
-	}
-
-	public void setResponsibleUser(ResponsibleUser responsibleUser) {
-		this.responsibleUser = responsibleUser;
-	}
-
 	public String getAddress() {
 		return address;
 	}
@@ -150,6 +142,14 @@ public class Client implements Serializable {
 		this.status = status;
 	}
 	
+	public String getBankAccount() {
+		return bankAccount;
+	}
+
+	public void setBankAccount(String bankAccount) {
+		this.bankAccount = bankAccount;
+	}
+
 	public static List<Field> clientFields(){
 		List<Field> fields = new ArrayList<Field>();
 		fields.add(new Field("Name", "String", true, ImportEnum.CLIENT_NAME));
@@ -158,7 +158,6 @@ public class Client implements Serializable {
 		fields.add(new Field("Telephone", "String", false, ImportEnum.CLIENT_TELEPHONE));
 		fields.add(new Field("Email", "String", false, ImportEnum.CLIENT_EMAIL));
 		fields.add(new Field("Address", "String", true, ImportEnum.CLIENT_ADDRESS));
-		fields.add(new Field("Responsible User", "String", false, ImportEnum.CLIENT_RESPONSIBLEUSER));
 		
 		return fields;
 	}

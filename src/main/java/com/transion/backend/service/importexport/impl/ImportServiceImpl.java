@@ -19,14 +19,13 @@ import com.transion.backend.model.Client;
 import com.transion.backend.model.ResponsibleUser;
 import com.transion.backend.model.Transaction;
 import com.transion.backend.model.importexport.Field;
+import com.transion.backend.model.importexport.Field.ImportEnum;
 import com.transion.backend.model.importexport.Import;
 import com.transion.backend.model.importexport.ImportLine;
 import com.transion.backend.model.importexport.Mapping;
 import com.transion.backend.repository.importexport.ImportRepository;
 import com.transion.backend.service.ClientService;
 import com.transion.backend.service.ResponsibleUserService;
-import com.transion.backend.service.TransactionService;
-import com.transion.backend.service.TransactionStatusService;
 import com.transion.backend.service.importexport.FieldService;
 import com.transion.backend.service.importexport.ImportLineService;
 import com.transion.backend.service.importexport.ImportService;
@@ -41,9 +40,6 @@ public class ImportServiceImpl implements ImportService{
 	ClientService cService;
 	
 	@Autowired
-	TransactionService tService;
-	
-	@Autowired
 	ImportLineService ilService;
 	
 	@Autowired
@@ -51,9 +47,6 @@ public class ImportServiceImpl implements ImportService{
 	
 	@Autowired
 	ResponsibleUserService ruService;
-	
-	@Autowired
-	TransactionStatusService tsService;
 	
 	@Override
 	public Import save(Import import1) {
@@ -118,7 +111,16 @@ public class ImportServiceImpl implements ImportService{
 			
 			switch (mapping.getType()) {
 				case CLIENT:
-					Client c = new Client();
+					Client c = null;
+					for(int j = 0; j < fields.size(); j++) {
+						if(fields.get(j).getImportEnum() == ImportEnum.CLIENT_EXTERNALUNIQUEKEY) {
+							c = cService.findByExternalUniqueKey(nextLine[j]);
+						}
+					}
+					
+					if(c == null)
+						c = new Client();
+					
 					for(int i = 0; i < fields.size(); i++) {
 						switch (fields.get(i).getImportEnum()) {
 							case CLIENT_NAME:
@@ -128,9 +130,6 @@ public class ImportServiceImpl implements ImportService{
 							case CLIENT_PIB:
 								if(fields.get(i).getType().equals("String"))
 									c.setPib(nextLine[i]);
-								break;
-							case CLIENT_RESPONSIBLEUSER:
-								c.setResponsibleUser(ruService.findOne(Long.parseLong(nextLine[i])));
 								break;
 							case CLIENT_ADDRESS:
 								c.setAddress(nextLine[i]);
@@ -182,9 +181,6 @@ public class ImportServiceImpl implements ImportService{
 									t.setAmount(Double.parseDouble(nextLine[j]));
 								}
 								break;
-							case TRANSACTION_TRANSACTIONSTATUS:
-								t.setStatus(tsService.findOne(Long.parseLong(nextLine[j])));
-								break;
 							case TRANSACTION_CLIENT:
 								t.setClient(cService.findByExternalUniqueKey(nextLine[j]));
 								break;
@@ -193,7 +189,6 @@ public class ImportServiceImpl implements ImportService{
 						}
 					}
 					t.setCreationDate(new Date());
-					tService.save(t);
 					Thread.sleep(10);
 					ilService.save(new ImportLine(t.getId(), mapping));
 					break;

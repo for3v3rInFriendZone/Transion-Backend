@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transion.backend.model.Client;
-import com.transion.backend.model.Transaction;
 import com.transion.backend.service.ClientService;
 
 @RestController

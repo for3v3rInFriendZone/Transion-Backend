@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,8 +28,19 @@ public class Item implements Serializable{
 	@Column(name = "NAME")
 	private String name;
 	
-	@Column(name = "PRICE")
-	private Double price;
+	@Column(name = "PURCHESEPRICE")
+	private Double purchesePrice;
+	
+	@Column(name = "SELLINGPRICE")
+	private Double sellingPrice;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "MEASURE_ID")
+	private Measure measure;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "TAX_ID")
+	private Tax tax;
 
 	public Long getId() {
 		return id;
@@ -52,11 +66,35 @@ public class Item implements Serializable{
 		this.name = name;
 	}
 
-	public Double getPrice() {
-		return price;
+	public Double getPurchesePrice() {
+		return purchesePrice;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setPurchesePrice(Double purchesePrice) {
+		this.purchesePrice = purchesePrice;
+	}
+
+	public Double getSellingPrice() {
+		return sellingPrice;
+	}
+
+	public void setSellingPrice(Double sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
+
+	public Measure getMeasure() {
+		return measure;
+	}
+
+	public void setMeasure(Measure measure) {
+		this.measure = measure;
+	}
+
+	public Tax getTax() {
+		return tax;
+	}
+
+	public void setTax(Tax tax) {
+		this.tax = tax;
 	}
 }

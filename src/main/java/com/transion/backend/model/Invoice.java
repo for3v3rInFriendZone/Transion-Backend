@@ -24,32 +24,39 @@ public class Invoice implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@ManyToOne
+	@JoinColumn(name = "CLIENT_ID")
+	private Client client;
 	
 	@Column(name = "AMOUNT")
 	private Double amount;
 	
-	@Column(name = "LASTDAYTOPAY")
-	private Date lastDayToPay;
+	@Column(name = "AMOUNTWITHOUTTAX")
+	private Double amountWithoutTax;
 	
-	@ManyToOne
-	@JoinColumn(name = "CREATEDBY_ID", nullable = false)
-	private User createdBy;
-	
-	@ManyToOne
-	@JoinColumn(name = "TOPAY_ID")
-	private Client toPay;
-	
-	@ManyToOne
-	@JoinColumn(name = "TOSOLD_ID")
-	private Client toSold;
-	
-	@ManyToOne
-	@JoinColumn(name = "TAX_ID", nullable = false)
-	private Tax tax;
+	@Column(name = "TAXAMOUNT")
+	private Double taxAmount;
 	
 	@OneToMany
 	@JoinColumn(name = "INVOICE_ID", referencedColumnName = "id")
 	private List<InvoiceItem> invoiceItems = new ArrayList<InvoiceItem>();
+	
+	@Column(name = "CREATEDDATE")
+	private Date createdDate;
+	
+	@Column(name = "CURRENCYDATE")
+	private Date currencyDate;
+	
+	@Column(name = "LASTDAYTOPAY")
+	private Date lastDayToPay;
+	
+	@Column(name = "EXTERNALUNIQUEKEY", nullable = false, unique = true)
+	private String externalUniqueKey;
+	
+	@ManyToOne
+	@JoinColumn(name = "CREATEDBY_ID", nullable = false)
+	private User createdBy;
 	
 	@ManyToOne
 	@JoinColumn(name = "TEMPLATE_URL")
@@ -58,6 +65,8 @@ public class Invoice implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "TYPE_ID")
 	private InvoiceType type;
+	
+	
 
 	public Long getId() {
 		return id;
@@ -83,30 +92,6 @@ public class Invoice implements Serializable{
 		this.createdBy = createdBy;
 	}
 
-	public Client getToPay() {
-		return toPay;
-	}
-
-	public void setToPay(Client toPay) {
-		this.toPay = toPay;
-	}
-
-	public Client getToSold() {
-		return toSold;
-	}
-
-	public void setToSold(Client toSold) {
-		this.toSold = toSold;
-	}
-
-	public Tax getTax() {
-		return tax;
-	}
-
-	public void setTax(Tax tax) {
-		this.tax = tax;
-	}
-
 	public List<InvoiceItem> getInvoiceItems() {
 		return invoiceItems;
 	}
@@ -130,5 +115,52 @@ public class Invoice implements Serializable{
 	public void setType(InvoiceType type) {
 		this.type = type;
 	}
-	
+
+	public Double getAmountWithoutTax() {
+		return amountWithoutTax;
+	}
+
+	public void setAmountWithoutTax(Double amountWithoutTax) {
+		this.amountWithoutTax = amountWithoutTax;
+	}
+
+	public Double getTaxAmount() {
+		return taxAmount;
+	}
+
+	public void setTaxAmount(Double taxAmount) {
+		this.taxAmount = taxAmount;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getLastDayToPay() {
+		return lastDayToPay;
+	}
+
+	public void setLastDayToPay(Date lastDayToPay) {
+		this.lastDayToPay = lastDayToPay;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public Date getCurrencyDate() {
+		return currencyDate;
+	}
+
+	public void setCurrencyDate(Date currencyDate) {
+		this.currencyDate = currencyDate;
+	}
 }
