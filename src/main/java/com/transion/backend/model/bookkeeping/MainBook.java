@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.transion.backend.model.Client;
-import com.transion.backend.model.chartofaccounts.ChartOfAccountsOrder;
 
 @Entity
 @Table(name = "MAINBOOK")
