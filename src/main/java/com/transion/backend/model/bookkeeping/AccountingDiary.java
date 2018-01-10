@@ -16,6 +16,10 @@ import javax.persistence.Table;
 
 import com.transion.backend.model.Client;
 
+/**
+ * Dnevnik knjizenja, ovde se ubacuju sva konta(nalozi) koja se naprave i unose se hronoloskim redosledom. 
+ * Sva racunanja na kraju moraju biti 0 (duguje-potrazuje=0). Ovo ce videti knjigovodje i stavke ce se automatski dodavati.
+ */
 @Entity
 @Table(name = "ACCOUNTINGDIARY")
 public class AccountingDiary implements Serializable{
@@ -26,17 +30,29 @@ public class AccountingDiary implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	/**
+	 * Klijent za koga se pravi dnevnik (klijent koji pravi fakture, a za koja radi knjigovodja).
+	 */
 	@ManyToOne
 	@JoinColumn(name = "CLIENT_ID")
 	private Client client;
 	
+	/**
+	 * Sve promene koje su nastale, a vezane su za knjizenje faktura.
+	 */
 	@OneToMany
 	@JoinColumn(name = "ACCOUNTINGDIARY_ID", referencedColumnName = "id")
 	private List<ChangeOrder> changeOrders = new ArrayList<ChangeOrder>();
 	
+	/**
+	 * Saldo za duguje.
+	 */
 	@Column(name = "OWINGSALDO")
 	private Double owingSaldo;
 	
+	/**
+	 * Saldo za potrazuje.
+	 */
 	@Column(name = "LOOKINGSALDO")
 	private Double lookingSaldo;
 

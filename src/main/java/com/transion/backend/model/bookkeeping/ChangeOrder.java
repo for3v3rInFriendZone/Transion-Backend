@@ -14,6 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Skup promena koje su vezane za neku stavku sa fakture(za jednu stavku pravi se 3 promene, jedna za stavku duguje, pdv za 
+ * duguje i poslednja ukupan iznos za potrazuje). Razlika salda duguje i potrazuje mora biti 0.
+ */
 @Entity
 @Table(name = "CHANGEORDER")
 public class ChangeOrder implements Serializable{
@@ -30,6 +34,9 @@ public class ChangeOrder implements Serializable{
 	@Column(name = "SERIALNUMBER")
 	private String serialNumber;
 	
+	/**
+	 * Uglavnom 3 promene koje ce se knjiziti, predpostavljam da ih moze biti i vise.
+	 */
 	@OneToMany
 	@JoinColumn(name = "CHANGEORDER_ID", referencedColumnName = "id")
 	private List<Change> changes = new ArrayList<Change>();

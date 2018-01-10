@@ -4,32 +4,32 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.transion.backend.model.bookkeeping.InvoiceBook;
-import com.transion.backend.service.bookkeeping.InvoiceBookService;
+import com.transion.backend.model.bookkeeping.BookOfIssuedInvoice;
+import com.transion.backend.service.bookkeeping.BookOfIssuedInvoiceService;
 
 @Service
-public class InvoiceBookServiceImpl implements InvoiceBookService{
+public class InvoiceBookServiceImpl implements BookOfIssuedInvoiceService{
 
 	@Override
-	public InvoiceBook save(InvoiceBook invoiceBook) {
+	public BookOfIssuedInvoice save(BookOfIssuedInvoice invoiceBook) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<InvoiceBook> save(List<InvoiceBook> invoiceBooks) {
+	public List<BookOfIssuedInvoice> save(List<BookOfIssuedInvoice> invoiceBooks) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public InvoiceBook findOne(Long id) {
+	public BookOfIssuedInvoice findOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<InvoiceBook> findAll() {
+	public List<BookOfIssuedInvoice> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -41,7 +41,7 @@ public class InvoiceBookServiceImpl implements InvoiceBookService{
 	}
 
 	@Override
-	public void delete(InvoiceBook invoiceBook) {
+	public void delete(BookOfIssuedInvoice invoiceBook) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -53,7 +53,7 @@ public class InvoiceBookServiceImpl implements InvoiceBookService{
 	}
 
 	@Override
-	public void deleteAll(List<InvoiceBook> invoiceBooks) {
+	public void deleteAll(List<BookOfIssuedInvoice> invoiceBooks) {
 		// TODO Auto-generated method stub
 		
 	}

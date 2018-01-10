@@ -17,9 +17,12 @@ import javax.persistence.Table;
 import com.transion.backend.model.Client;
 import com.transion.backend.model.Invoice;
 
+/**
+ * Knjiga izdatih racuna, racuni koje kompanija izdaje. 
+ */
 @Entity
 @Table(name = "InvoiceBook")
-public class InvoiceBook implements Serializable{
+public class BookOfIssuedInvoice implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,13 +30,19 @@ public class InvoiceBook implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	/**
+	 * Klijent za koga se knjigovodja radi.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "CLIENT_ID")
 	private Client client;
 	
+	/**
+	 * Artikli koji se unose u knjigu izdatih racuna.
+	 */
 	@OneToMany
-	@JoinColumn(name = "INVOICEBOOK_ID", referencedColumnName = "id")
-	private List<InvoiceBookItem> items = new ArrayList<InvoiceBookItem>();
+	@JoinColumn(name = "BOOKOFISSUEDINVOICE_ID", referencedColumnName = "id")
+	private List<BookOfIssuedInvoiceItem> items = new ArrayList<BookOfIssuedInvoiceItem>();
 	
 	@Column(name = "TAXSUM")
 	private Double taxSum;
@@ -78,11 +87,11 @@ public class InvoiceBook implements Serializable{
 		this.client = client;
 	}
 
-	public List<InvoiceBookItem> getItems() {
+	public List<BookOfIssuedInvoiceItem> getItems() {
 		return items;
 	}
 
-	public void setItems(List<InvoiceBookItem> items) {
+	public void setItems(List<BookOfIssuedInvoiceItem> items) {
 		this.items = items;
 	}
 

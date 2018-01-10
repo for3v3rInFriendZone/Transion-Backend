@@ -15,6 +15,9 @@ import javax.persistence.Table;
 
 import com.transion.backend.model.Client;
 
+/**
+ * Glavna knjiga, sva prethodna knjizenja sortirana po kontima.
+ */
 @Entity
 @Table(name = "MAINBOOK")
 public class MainBook implements Serializable{

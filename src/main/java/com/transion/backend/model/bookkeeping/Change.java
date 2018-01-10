@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import com.transion.backend.model.Invoice;
 import com.transion.backend.model.chartofaccounts.ChartOfAccountsOrder;
 
+/**
+ * Promena koju unosi knjigovodja.
+ */
 @Entity
 @Table(name = "CHANGE")
 public class Change implements Serializable{

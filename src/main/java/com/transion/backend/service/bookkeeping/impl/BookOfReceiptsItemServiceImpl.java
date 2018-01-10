@@ -4,32 +4,32 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.transion.backend.model.bookkeeping.FreeTraffic;
-import com.transion.backend.service.bookkeeping.FreeTrafficService;
+import com.transion.backend.model.bookkeeping.BookOfReceiptsItem;
+import com.transion.backend.service.bookkeeping.BookOfReceiptsItemService;
 
 @Service
-public class FreeTrafficServiceImpl implements FreeTrafficService{
+public class BookOfReceiptsItemServiceImpl implements BookOfReceiptsItemService{
 
 	@Override
-	public FreeTraffic save(FreeTraffic freeTrafic) {
+	public BookOfReceiptsItem save(BookOfReceiptsItem receiptsBookItem) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<FreeTraffic> save(List<FreeTraffic> freeTraffices) {
+	public List<BookOfReceiptsItem> save(List<BookOfReceiptsItem> receiptsBookItems) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public FreeTraffic findOne(Long id) {
+	public BookOfReceiptsItem findOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<FreeTraffic> findAll() {
+	public List<BookOfReceiptsItem> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -41,7 +41,7 @@ public class FreeTrafficServiceImpl implements FreeTrafficService{
 	}
 
 	@Override
-	public void delete(FreeTraffic freeTraffic) {
+	public void delete(BookOfReceiptsItem receiptsBookItem) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -53,7 +53,7 @@ public class FreeTrafficServiceImpl implements FreeTrafficService{
 	}
 
 	@Override
-	public void deleteAll(List<FreeTraffic> freeTrafices) {
+	public void deleteAll(List<BookOfReceiptsItem> receiptsBookItems) {
 		// TODO Auto-generated method stub
 		
 	}

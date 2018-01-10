@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Faktura koju ce popunjavati klijenti, a na osnovu njih knjigovodje ce popunjavati konta(dnevnik i glavnu knjigu)  
+ */
 @Entity
 @Table(name = "INVOICE")
 public class Invoice implements Serializable{
@@ -25,19 +28,34 @@ public class Invoice implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/**
+	 * Klijent za koga se popunjava faktura, onaj kome prodajemo. Podatke o nasoj kompaniji cemo izvlaciti iz podesavanja.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "CLIENT_ID")
 	private Client client;
 	
+	/**
+	 * Ukupan iznos fakture.
+	 */
 	@Column(name = "AMOUNT")
 	private Double amount;
 	
+	/**
+	 * Iznos bez PDV-a. Mozda bi bilo pametno odvojiti PDV, 20% i 10%.
+	 */
 	@Column(name = "AMOUNTWITHOUTTAX")
 	private Double amountWithoutTax;
 	
+	/**
+	 * Iznos samog PDV-a.
+	 */
 	@Column(name = "TAXAMOUNT")
 	private Double taxAmount;
-	
+
+	/**
+	 * Artikli koji ce se nalaziti na fakturi.
+	 */
 	@OneToMany
 	@JoinColumn(name = "INVOICE_ID", referencedColumnName = "id")
 	private List<InvoiceItem> invoiceItems = new ArrayList<InvoiceItem>();
@@ -66,8 +84,6 @@ public class Invoice implements Serializable{
 	@JoinColumn(name = "TYPE_ID")
 	private InvoiceType type;
 	
-	
-
 	public Long getId() {
 		return id;
 	}
