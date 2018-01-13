@@ -69,6 +69,9 @@ public class Invoice implements Serializable{
 	@Column(name = "LASTDAYTOPAY")
 	private Date lastDayToPay;
 	
+	@Column(name = "paidDate")
+	private Date paidDate;
+	
 	@Column(name = "EXTERNALUNIQUEKEY", nullable = false, unique = true)
 	private String externalUniqueKey;
 	
