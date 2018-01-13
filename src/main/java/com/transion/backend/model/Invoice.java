@@ -29,6 +29,13 @@ public class Invoice implements Serializable{
 	private Long id;
 
 	/**
+	 * Onaj koji pravi fakturu.
+	 */
+	@ManyToOne
+	@JoinColumn(name = "SELLER_ID")
+	private Client seller;
+	
+	/**
 	 * Klijent za koga se popunjava faktura, onaj kome prodajemo. Podatke o nasoj kompaniji cemo izvlaciti iz podesavanja.
 	 */
 	@ManyToOne
@@ -86,6 +93,12 @@ public class Invoice implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "TYPE_ID")
 	private InvoiceType type;
+	
+	@Column(name = "ISVALID")
+	private boolean valid;
+	
+	@Column(name = "ISVPAY")
+	private boolean pay;
 	
 	public Long getId() {
 		return id;
@@ -181,5 +194,45 @@ public class Invoice implements Serializable{
 
 	public void setCurrencyDate(Date currencyDate) {
 		this.currencyDate = currencyDate;
+	}
+
+	public Client getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Client seller) {
+		this.seller = seller;
+	}
+
+	public Date getPaidDate() {
+		return paidDate;
+	}
+
+	public void setPaidDate(Date paidDate) {
+		this.paidDate = paidDate;
+	}
+
+	public String getExternalUniqueKey() {
+		return externalUniqueKey;
+	}
+
+	public void setExternalUniqueKey(String externalUniqueKey) {
+		this.externalUniqueKey = externalUniqueKey;
+	}
+
+	public boolean isValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
+
+	public boolean isPay() {
+		return pay;
+	}
+
+	public void setPay(boolean pay) {
+		this.pay = pay;
 	}
 }
