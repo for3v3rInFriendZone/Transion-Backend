@@ -22,7 +22,7 @@ public class Measure implements Serializable{
 	@Column(name = "NAME")
 	private String name;
 	
-	@Column(name = "shortcut")
+	@Column(name = "SHORTCUT")
 	private String shortcut;
 
 	public Long getId() {

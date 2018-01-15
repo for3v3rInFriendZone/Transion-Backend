@@ -31,7 +31,7 @@ public class Item implements Serializable{
 	@Column(name = "PURCHESEPRICE")
 	private Double purchesePrice;
 	
-	@Column(name = "SELLINGPRICE")
+	@Column(name = "SELLINGPRICE")	
 	private Double sellingPrice;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

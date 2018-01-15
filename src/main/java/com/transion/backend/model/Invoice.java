@@ -16,11 +16,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Faktura koju ce popunjavati klijenti, a na osnovu njih knjigovodje ce popunjavati konta(dnevnik i glavnu knjigu)  
+ * Faktura koju ce popunjavati klijenti, a na osnovu njih knjigovodje ce
+ * popunjavati konta(dnevnik i glavnu knjigu)
  */
 @Entity
 @Table(name = "INVOICE")
-public class Invoice implements Serializable{
+public class Invoice implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,25 +29,29 @@ public class Invoice implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "EXTERNALUNIQUEKEY", nullable = false, unique = true)
+	private String externalUniqueKey;
+
 	/**
-	 * Klijent za koga se popunjava faktura, onaj kome prodajemo. Podatke o nasoj kompaniji cemo izvlaciti iz podesavanja.
+	 * Klijent za koga se popunjava faktura, onaj kome prodajemo. Podatke o nasoj
+	 * kompaniji cemo izvlaciti iz podesavanja.
 	 */
 	@ManyToOne
 	@JoinColumn(name = "CLIENT_ID")
 	private Client client;
-	
+
 	/**
 	 * Ukupan iznos fakture.
 	 */
 	@Column(name = "AMOUNT")
 	private Double amount;
-	
+
 	/**
 	 * Iznos bez PDV-a. Mozda bi bilo pametno odvojiti PDV, 20% i 10%.
 	 */
 	@Column(name = "AMOUNTWITHOUTTAX")
 	private Double amountWithoutTax;
-	
+
 	/**
 	 * Iznos samog PDV-a.
 	 */
@@ -59,34 +64,31 @@ public class Invoice implements Serializable{
 	@OneToMany
 	@JoinColumn(name = "INVOICE_ID", referencedColumnName = "id")
 	private List<InvoiceItem> invoiceItems = new ArrayList<InvoiceItem>();
-	
+
 	@Column(name = "CREATEDDATE")
 	private Date createdDate;
-	
+
 	@Column(name = "CURRENCYDATE")
 	private Date currencyDate;
-	
+
 	@Column(name = "LASTDAYTOPAY")
 	private Date lastDayToPay;
-	
+
 	@Column(name = "paidDate")
 	private Date paidDate;
-	
-	@Column(name = "EXTERNALUNIQUEKEY", nullable = false, unique = true)
-	private String externalUniqueKey;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "CREATEDBY_ID", nullable = false)
 	private User createdBy;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "TEMPLATE_URL")
 	private Document template;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "TYPE_ID")
 	private InvoiceType type;
-	
+
 	public Long getId() {
 		return id;
 	}
