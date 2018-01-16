@@ -44,8 +44,8 @@ public class InvoiceItem implements Serializable{
 	@Column(name = "TAXAMOUNT")
 	private Double taxAmount;
 	
-	@Column(name = "RABAT")
-	private Double rabat;
+	@Column(name = "REBATE")
+	private Double rebate;
 
 	public Long getId() {
 		return id;
@@ -111,11 +111,11 @@ public class InvoiceItem implements Serializable{
 		this.taxAmount = taxAmount;
 	}
 
-	public Double getRabat() {
-		return rabat;
+	public Double getRebate() {
+		return rebate;
 	}
 
-	public void setRabat(Double rabat) {
-		this.rabat = rabat;
+	public void setRebate(Double rebate) {
+		this.rebate = rebate;
 	}	
 }

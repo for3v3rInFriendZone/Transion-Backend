@@ -35,7 +35,7 @@ public class User implements Serializable {
 	@Column(name = "LASTNAME", nullable = false)
 	private String lastname;
 
-	@Column(name = "USERNAME",nullable = false , unique = true)
+	@Column(name = "USERNAME", nullable = false, unique = true)
 	private String username;
 
 	@Size(min = 6)
@@ -45,22 +45,25 @@ public class User implements Serializable {
 	@ManyToOne()
 	@JoinColumn(name = "TYPE_ID")
 	private UserType type;
-	
+
 	@Column(name = "EMAIL")
 	private String email;
-	
+
 	@Column(name = "TELEPHONE")
 	private String telephone;
-	
+
 	@Column(name = "CREATEDON")
 	private Date createdOn;
-	
+
 	@Column(name = "UPDATEDON")
 	private Date updatedOn;
-	
-	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private List<Role> roles = new ArrayList<Role>();
+
+	@ManyToOne
+	private Client client;
 
 	public User() {
 
@@ -75,11 +78,11 @@ public class User implements Serializable {
 		this.type = type;
 		this.roles = roles;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -163,4 +166,13 @@ public class User implements Serializable {
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 }

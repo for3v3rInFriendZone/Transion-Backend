@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,13 +35,16 @@ public class Invoice implements Serializable {
 
 	/**
 	 * Klijent za koga se popunjava faktura, onaj kome prodajemo. Podatke o nasoj
-	 * kompaniji cemo izvlaciti iz podesavanja.
-	 * Onaj koji pravi fakturu.
+	 * kompaniji cemo izvlaciti iz podesavanja. Onaj koji pravi fakturu.
 	 */
 	@ManyToOne
 	@JoinColumn(name = "SELLER_ID")
 	private Client seller;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "BUYER_ID")
+	private Client buyer;
+
 	/**
 	 * Ukupan iznos fakture.
 	 */
@@ -62,7 +66,7 @@ public class Invoice implements Serializable {
 	/**
 	 * Artikli koji ce se nalaziti na fakturi.
 	 */
-	@OneToMany
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "INVOICE_ID", referencedColumnName = "id")
 	private List<InvoiceItem> invoiceItems = new ArrayList<InvoiceItem>();
 
@@ -92,10 +96,10 @@ public class Invoice implements Serializable {
 
 	@Column(name = "ISVALID")
 	private boolean valid;
-	
-	@Column(name = "ISVPAY")
-	private boolean pay;
-	
+
+	@Column(name = "ISPAID")
+	private boolean isPaid;
+
 	public Long getId() {
 		return id;
 	}
@@ -171,7 +175,7 @@ public class Invoice implements Serializable {
 	public void setLastDayToPay(Date lastDayToPay) {
 		this.lastDayToPay = lastDayToPay;
 	}
-	
+
 	public Date getCurrencyDate() {
 		return currencyDate;
 	}
@@ -212,11 +216,20 @@ public class Invoice implements Serializable {
 		this.valid = valid;
 	}
 
-	public boolean isPay() {
-		return pay;
+	public boolean isPaid() {
+		return isPaid;
 	}
 
-	public void setPay(boolean pay) {
-		this.pay = pay;
+	public void setPaid(boolean isPaid) {
+		this.isPaid = isPaid;
 	}
+
+	public Client getBuyer() {
+		return buyer;
+	}
+
+	public void setBuyer(Client buyer) {
+		this.buyer = buyer;
+	}
+
 }

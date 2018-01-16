@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.transion.backend.model.importexport.Field;
 import com.transion.backend.model.importexport.Field.ImportEnum;
@@ -50,18 +51,17 @@ public class Client implements Serializable {
 
 	@Column(name = "UPDATEDON")
 	private Date updatedOn;
-	
+
 	@Enumerated(EnumType.STRING)
 	private ClientStatus status;
-	
+
 	@Column(name = "BANKACCOUNT")
 	private String bankAccount;
-	
+
 	public enum ClientStatus {
-	    BUYER, 
-	    SUPPLIER
+		BUYER, SUPPLIER
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -141,7 +141,7 @@ public class Client implements Serializable {
 	public void setStatus(ClientStatus status) {
 		this.status = status;
 	}
-	
+
 	public String getBankAccount() {
 		return bankAccount;
 	}
@@ -150,7 +150,7 @@ public class Client implements Serializable {
 		this.bankAccount = bankAccount;
 	}
 
-	public static List<Field> clientFields(){
+	public static List<Field> clientFields() {
 		List<Field> fields = new ArrayList<Field>();
 		fields.add(new Field("Name", "String", true, ImportEnum.CLIENT_NAME));
 		fields.add(new Field("PIB", "String", true, ImportEnum.CLIENT_PIB));
@@ -158,7 +158,7 @@ public class Client implements Serializable {
 		fields.add(new Field("Telephone", "String", false, ImportEnum.CLIENT_TELEPHONE));
 		fields.add(new Field("Email", "String", false, ImportEnum.CLIENT_EMAIL));
 		fields.add(new Field("Address", "String", true, ImportEnum.CLIENT_ADDRESS));
-		
+
 		return fields;
 	}
 

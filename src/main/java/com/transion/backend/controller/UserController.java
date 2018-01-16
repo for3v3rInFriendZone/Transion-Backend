@@ -132,32 +132,9 @@ public class UserController {
 		return new ResponseEntity<User>(userSer.findOne(id), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
-	public ResponseEntity<User> findOneByUsername(@PathVariable String username) {
+	@RequestMapping(value = "/username", method = RequestMethod.GET, params = { "username" })
+	public ResponseEntity<User> findOneByUsername(@RequestParam(value = "username") String username) {
 
 		return new ResponseEntity<User>(userSer.findByUsername(username), HttpStatus.OK);
-	}
-
-	private static class RunnableTask implements Runnable {
-
-		private String message;
-		private TaxService taxSer;
-
-		public RunnableTask(String message, TaxService taxSer) {
-			this.message = message;
-			this.taxSer = taxSer;
-		}
-
-		@Override
-		public void run() {
-			Tax tax = new Tax();
-			tax.setName("Test Tax");
-			tax.setBase(18.20);
-			
-			taxSer.save(tax);
-			
-			System.out.println(
-					new Date() + " Runnable Task with " + message + " on thread " + Thread.currentThread().getName());
-		}
 	}
 }
