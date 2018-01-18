@@ -2,6 +2,7 @@ package com.transion.backend.service;
 
 import java.util.List;
 
+import com.transion.backend.model.Client;
 import com.transion.backend.model.Item;
 
 public interface ItemService {
@@ -21,4 +22,6 @@ public interface ItemService {
 	public void deleteAll();
 	
 	public void deleteAll(List<Item> items);
+	
+	public List<Item> findBySupplier(Client client);
 }

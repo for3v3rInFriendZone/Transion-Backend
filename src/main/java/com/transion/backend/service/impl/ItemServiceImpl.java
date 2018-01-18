@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.transion.backend.model.Client;
 import com.transion.backend.model.Item;
 import com.transion.backend.repository.ItemRepository;
 import com.transion.backend.service.ItemService;
@@ -54,5 +55,13 @@ public class ItemServiceImpl implements ItemService{
 	public void deleteAll(List<Item> items) {
 		itemRepository.delete(items);
 	}
+
+	@Override
+	public List<Item> findBySupplier(Client client) {
+		// TODO Auto-generated method stub
+		return itemRepository.findBySupplier(client);
+	}
+	
+	
 
 }

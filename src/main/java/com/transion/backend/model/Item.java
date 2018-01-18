@@ -14,40 +14,54 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ITEM")
-public class Item implements Serializable{
+public class Item implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "EXTERNALKEY", nullable = false, unique = true)
 	private String externalUniqueKey;
 
-	@Column(name = "NAME")
+	@Column(name = "NAME", nullable = false)
 	private String name;
-	
-	@Column(name = "PURCHESEPRICE")
-	private Double purchesePrice;
-	
-	@Column(name = "SELLINGPRICE")	
+
+	@Column(name = "DESCRITION")
+	private String description;
+
+	/**
+	 * Garancija
+	 */
+	@Column(name = "WARRANTY")
+	private Long warranty;
+
+	/**
+	 * Dobavljac
+	 */
+	@ManyToOne
+	@JoinColumn(name = "SUPPLIER_ID", nullable = false)
+	private Client supplier;
+
+	@Column(name = "PURCHASEPRICE", nullable = false)
+	private Double purchasePrice;
+
+	@Column(name = "SELLINGPRICE", nullable = false)
 	private Double sellingPrice;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+
+	@ManyToOne
 	@JoinColumn(name = "MEASURE_ID")
 	private Measure measure;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "TAX_ID")
+
+	@ManyToOne
+	@JoinColumn(name = "TAX_ID", nullable = false)
 	private Tax tax;
+
+	// Oni stavljaju i konto na artikal, razmisliti o tome
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getExternalUniqueKey() {
@@ -66,22 +80,6 @@ public class Item implements Serializable{
 		this.name = name;
 	}
 
-	public Double getPurchesePrice() {
-		return purchesePrice;
-	}
-
-	public void setPurchesePrice(Double purchesePrice) {
-		this.purchesePrice = purchesePrice;
-	}
-
-	public Double getSellingPrice() {
-		return sellingPrice;
-	}
-
-	public void setSellingPrice(Double sellingPrice) {
-		this.sellingPrice = sellingPrice;
-	}
-
 	public Measure getMeasure() {
 		return measure;
 	}
@@ -97,4 +95,45 @@ public class Item implements Serializable{
 	public void setTax(Tax tax) {
 		this.tax = tax;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Long getWarranty() {
+		return warranty;
+	}
+
+	public void setWarranty(Long warranty) {
+		this.warranty = warranty;
+	}
+
+	public Client getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Client supplier) {
+		this.supplier = supplier;
+	}
+
+	public Double getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(Double purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public Double getSellingPrice() {
+		return sellingPrice;
+	}
+
+	public void setSellingPrice(Double sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
+
 }

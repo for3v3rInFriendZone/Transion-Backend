@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transion.backend.model.Client;
 import com.transion.backend.model.Item;
+import com.transion.backend.model.User;
 import com.transion.backend.service.ItemService;
+import com.transion.backend.service.UserService;
 
 @RestController
 @RequestMapping(value = "/item")
@@ -21,6 +25,9 @@ public class ItemController {
 	
 	@Autowired
 	ItemService iService;
+	
+	@Autowired
+	UserService userService;
 
 	Logger logger = Logger.getLogger(this.getClass());
 	
@@ -63,7 +70,7 @@ public class ItemController {
 		return new ResponseEntity<Item>(item, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/id", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Item> delete(@PathVariable Long id){
 		if(id == null) {
 			logger.error("Id is null.");
@@ -86,4 +93,15 @@ public class ItemController {
 		iService.deleteAll();
 		return new ResponseEntity<Item>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/client", params = { "username" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Item>> getAllItemsByClient(@RequestParam(value = "username") String username){
+		User user = userService.findByUsername(username);
+		if(user == null) {
+			logger.error("User doesn't exist.");
+			return new ResponseEntity<List<Item>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<Item>>(iService.findBySupplier(user.getClient()), HttpStatus.OK);
+	}
+	
 }
